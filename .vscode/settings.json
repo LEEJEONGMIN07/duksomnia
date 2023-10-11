@@ -1,0 +1,5 @@
+{
+    "java.compile.nullAnalysis.mode": "automatic",
+    "cmake.sourceDirectory": "C:/Users/DS/Desktop/20201210/flutter_application_1/build/windows/_deps/nuget-subbuild",
+    "java.configuration.updateBuildConfiguration": "interactive"
+}

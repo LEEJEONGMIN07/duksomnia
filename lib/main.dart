@@ -268,7 +268,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Align(
                 child: IconButton(
                   onPressed: _recording ? _stop : _recorder,
-                  icon: Image.asset('icon.png'),
+                  icon: Image.asset('assets/icon.png'),
                   iconSize: 160,
                   alignment: Alignment.center,
                 ),

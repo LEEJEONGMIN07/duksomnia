@@ -1,328 +1,215 @@
-// ignore_for_file: unused_import, use_key_in_widget_constructors, library_private_types_in_public_api, unnecessary_string_interpolations, prefer_const_constructors, unused_element, unused_field, sized_box_for_whitespace, deprecated_member_use, prefer_adjacent_string_concatenation, unnecessary_null_comparison, avoid_print
+// ignore_for_file: library_private_types_in_public_api, prefer_interpolation_to_compose_strings, no_leading_underscores_for_local_identifiers, unnecessary_this, unused_local_variable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/utils.dart';
+import 'dart:async';
+import 'dart:developer';
 import 'package:tflite_audio/tflite_audio.dart';
-import 'package:audioplayers/audioplayers.dart';
-// import 'package:vibration/vibration.dart';
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter/services.dart';
+import 'dart:convert';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(const MyApp());
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+///This example showcases how to take advantage of all the futures and streams
+///from the plugin.
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData.dark(),
-      home: MyHomePage(),
-    );
-  }
+  _MyAppState createState() => _MyAppState();
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  AudioPlayer audioPlayer = AudioPlayer();
-  TfliteAudio tfliteAudio = TfliteAudio();
-  String _sound = " ";
-  bool _recording = false;
-  late Stream<Map<dynamic, dynamic>> result;
-  String _currentImage = 'assets/icon.png';
+class _MyAppState extends State<MyApp> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final isRecording = ValueNotifier<bool>(false);
+  Stream<Map<dynamic, dynamic>>? result;
   List<String> labels = []; // 라벨 리스트
   List<double> predictionPercentages = []; // 예측 퍼센티지 리스트
+
+  final String model = 'assets/model.tflite';
+  final String label = 'assets/labels.txt';
+  final String inputType = 'rawAudio';
+  final int sampleRate = 44100;
+  final int bufferSize = 11016;
+  final bool outputRawScores = false;
+  final int numOfInferences = 5;
+  final int numThreads = 1;
+  final bool isAsset = true;
+
+  final double detectionThreshold = 0.3;
+  final int averageWindowDuration = 1000;
+  final int minimumTimeBetweenSamples = 30;
+  final int suppressionTime = 1500;
 
   @override
   void initState() {
     super.initState();
-    //모델 로드
     TfliteAudio.loadModel(
-        model: 'assets/model.tflite',
-        label: 'assets/labels.txt',
-        numThreads: 1,
-        isAsset: true,
-        outputRawScores: true,
-        inputType: 'melSpectrogram');
+      inputType: inputType,
+      model: model,
+      label: label,
+    );
+    // mfcc parameters
+    TfliteAudio.setSpectrogramParameters(nMFCC: 40, hopLength: 16384);
   }
 
-  ///녹음 시작
-  void _recorder() {
-    String recognition = "";
-    double rawScore = 0;
-    if (!_recording) {
-      setState(() => _recording = true);
-      result = TfliteAudio.startAudioRecognition(
-        sampleRate: 44100,
-        bufferSize: 22016,
-        numOfInferences: 1,
-        detectionThreshold: 0.3,
-      );
-      result.listen((event) {
-        recognition = event["recognitionResult"];
-        rawScore = event["rawScore"];
-        labels.add(recognition.split(" ")[1]);
-        predictionPercentages.add(rawScore * 100);
-      }).onDone(() {
-        setState(() {
-          _sound = recognition.split(" ")[1];
-          if (_sound != '배경 소음' && _sound.isNotEmpty && rawScore * 100 >= 98) {
-            _currentImage = _recording ? 'assets/icon2.png' : 'assets/icon.png';
-            Text('$_sound' + '가 인식되었습니다.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black));
+  void getResult() {
+    result = TfliteAudio.startAudioRecognition(
+      sampleRate: sampleRate,
+      bufferSize: bufferSize,
+      numOfInferences: numOfInferences,
+    );
 
-            // Vibration.vibrate(duration: 500);
-          }
-        });
-      });
-    }
+    result
+        ?.listen((event) =>
+            log("Recognition Result: " + event["recognitionResult"].toString()),
+            )
+        .onDone(() => isRecording.value = false);
   }
 
-  //녹음 멈춤
-  void _stop() {
-    TfliteAudio.stopAudioRecognition();
-    setState(() => _recording = false);
+
+
+  ///fetches the labels from the text file in assets
+  Future<List<String>> fetchLabelList() async {
+    List<String> _labelList = [];
+    await rootBundle.loadString(this.label).then((q) {
+      for (String i in const LineSplitter().convert(q)) {
+        _labelList.add(i);
+      }
+    });
+    return _labelList;
   }
+
+  ///handles null exception if snapshot is null.
+  String showResult(AsyncSnapshot snapshot, String key) =>
+      snapshot.hasData ? snapshot.data[key].toString() : '0 ';
 
   @override
   Widget build(BuildContext context) {
-    double baseWidth = 360;
-    double fem = MediaQuery.of(context).size.width / baseWidth;
-    double ffem = fem * 0.97;
-    // 라벨과 예측 퍼센티지를 그래프로 출력하는 코드 추가
-    List<Widget> predictionWidgets = [];
-    for (int i = 0; i < labels.length; i++) {
-      predictionWidgets.add(
-        Text('${labels[i]}: ${predictionPercentages[i].toStringAsFixed(2)}%'),
-      );
-    }
-
-    return Material(
-      // width: double.infinity,
-      child: Container(
-        // safemodeehw (241:398)
-        width: double.infinity,
-        height: 858 * fem,
-        decoration: BoxDecoration(
-          color: Color(0xffffffff),
-        ),
-        child: Stack(
-          children: [
-            //배경
-            Positioned(
-              left: 0 * fem,
-              top: 0 * fem,
-              child: Align(
-                child: SizedBox(
-                  width: 360 * fem,
-                  height: 800 * fem,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xff97d5f8),
-                    ),
-                  ),
-                ),
-              ),
+    return MaterialApp(
+        home: Scaffold(
+            key: _scaffoldKey,
+            appBar: AppBar(
+              title: const Text('earZing'),
             ),
 
-            Positioned(
-              // ellipse2mvy (241:405)
-              //흰색 원
-              left: 48 * fem,
-              top: 140 * fem,
-              child: Align(
-                child: SizedBox(
-                  width: 264 * fem,
-                  height: 264 * fem,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(132 * fem),
-                      border: Border.all(color: Color(0xfff5f6f9), width: 20),
-                      color: Color(0xffffffff),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            ///Streambuilder for inference results
+            body: StreamBuilder<Map<dynamic, dynamic>>(
+                stream: result,
+                builder: (BuildContext context,
+                    AsyncSnapshot<Map<dynamic, dynamic>> inferenceSnapshot) {
+                  ///futurebuilder for getting the label list
+                  return FutureBuilder(
+                      future: fetchLabelList(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<String>> labelSnapshot) {
+                        switch (inferenceSnapshot.connectionState) {
+                          case ConnectionState.none:
+                            //Loads the asset file.
+                            if (labelSnapshot.hasData) {
+                              return labelListWidget(labelSnapshot.data);
+                            } else {
+                              return const CircularProgressIndicator();
+                            }
+                          case ConnectionState.waiting:
 
-            Positioned(
-              // 파란원
-              // ellipse1h3w (241:406)
-              left: 89 * fem,
-              top: 181 * fem,
-              child: Align(
-                child: SizedBox(
-                  width: 182 * fem,
-                  height: 182 * fem,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(91 * fem),
-                      color: _recording ? Colors.grey : Colors.lightBlue,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+                            ///Widets will let the user know that its loading when waiting for results
+                            return Stack(children: <Widget>[
+                              Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: inferenceTimeWidget('듣고있어요..')),
+                              labelListWidget(labelSnapshot.data),
+                            ]);
 
-            Positioned(
-              // rectangle3KLD (241:408)
-              left: 85 * fem,
-              top: 90 * fem,
-              child: Align(
-                child: SizedBox(
-                  width: 190 * fem,
-                  height: 30 * fem,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20 * fem),
-                      color: Color(0xffffffff),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+                          ///Widgets will display the final results.
+                          default:
+                            return Stack(children: <Widget>[
+                              Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: inferenceTimeWidget(showResult(
+                                          inferenceSnapshot, 'inferenceTime') +
+                                      'ms')),
+                              labelListWidget(
+                                  labelSnapshot.data,
+                                  showResult(
+                                      inferenceSnapshot, 'recognitionResult'))
+                            ]);
+                        }
+                      });
+                }),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: ValueListenableBuilder(
+                valueListenable: isRecording,
+                builder: (context, value, widget) {
+                  if (value == false) {
+                    return FloatingActionButton(
+                      //버튼
+                      onPressed: () {
+                        isRecording.value = true;
+                        setState(() {
+                          getResult();
+                        });
+                      },
+                      backgroundColor: Colors.blue,
+                      child: const Icon(Icons.mic),
+                    );
+                  } else {
+                    return FloatingActionButton(
+                      onPressed: () {
+                        log('Audio Recognition Stopped');
+                        TfliteAudio.stopAudioRecognition();
+                      },
+                      backgroundColor: Colors.red,
+                      child: const Icon(Icons.adjust),
+                    );
+                  }
+                })));
+  }
 
-            Positioned(
-              // Ei5 (241:409)
-              //상단
-              left: 120 * fem,
-              top: 98 * fem,
-              child: Align(
-                child: SizedBox(
-                  width: 150 * fem,
-                  height: 15 * fem,
-                  child: Text(
-                    _recording ? '듣고있어요' : '아이콘을 눌러 실행하세요',
-                    textAlign: TextAlign.center,
-                    style: SafeGoogleFont(
-                      'Nunito',
-                      fontSize: 11 * ffem,
-                      fontWeight: FontWeight.w500,
-                      height: 1.3625 * ffem / fem,
-                      color: Color(0xff000000),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+  ///If snapshot data matches the label, it will change colour
+  Widget labelListWidget(List<String>? labelList, [String? result]) {
+    return Center(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: labelList!.asMap().entries.map((entry) {
+              final index = entry.key;
+              final labels = entry.value;
+              final predictionPercentage = predictionPercentages[index];
+              //결과 출력
+              if (labels == result && labels != '배경 소음' && predictionPercentage >= 98) {
+                return Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text(labels.toString(),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                          color: Colors.green,
+                        )));
+              } else {
+                return Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text(labels.toString(),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        )));
+              }
+            }).toList()));
+  }
 
-            Positioned(
-              // settingtwoJxq (241:410)
-              left: 317 * fem,
-              top: 30 * fem,
-              child: Align(
-                child: SizedBox(
-                  width: 24 * fem,
-                  height: 24 * fem,
-                  child: TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                    ),
-                    child: Image.asset('assets/setting.png',
-                        width: 25 * fem,
-                        height: 25 * fem,
-                        fit: BoxFit.fitWidth),
-                  ),
-                ),
-              ),
-            ),
-
-            Positioned(
-              // gTb (241:414)
-              //최상단
-              left: 140 * fem,
-              top: 30 * fem,
-              child: Align(
-                child: SizedBox(
-                  width: 100 * fem,
-                  height: 28 * fem,
-                  child: Text(
-                    'earZing',
-                    style: SafeGoogleFont(
-                      'Nunito',
-                      fontSize: 20 * ffem,
-                      fontWeight: FontWeight.w800,
-                      height: 1.3625 * ffem / fem,
-                      color: Color(0xffffffff),
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-
-            Positioned(
-              // framegru (241:416)
-              left: 120 * fem,
-              top: 205 * fem,
-              child: Align(
-                child: IconButton(
-                  onPressed: _recording ? _stop : _recorder,
-                  icon: Image.asset('assets/icon.png'),
-                  iconSize: 160,
-                  alignment: Alignment.center,
-                ),
-              ),
-            ),
-
-            Positioned(
-              // QH7 (241:426)
-              left: 20 * fem,
-              top: 424 * fem,
-              child: Container(
-                padding:
-                    EdgeInsets.fromLTRB(20 * fem, 19 * fem, 20 * fem, 20 * fem),
-                width: 320 * fem,
-                height: 450 * fem,
-                decoration: BoxDecoration(
-                  color: Color(0xfff5f6f9),
-                  borderRadius: BorderRadius.circular(20 * fem),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      // autogroup8gws4sT (8fdKhdQ65C5ZFzYxX28Gws)
-                      margin: EdgeInsets.fromLTRB(
-                          0 * fem, 0 * fem, 0 * fem, 20 * fem),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            // P93 (241:428)
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 24 * fem, 0 * fem),
-                            child: Text(
-                              '실시간 알림',
-                              style: SafeGoogleFont(
-                                'Nunito',
-                                fontSize: 14 * ffem,
-                                fontWeight: FontWeight.w800,
-                                height: 1.3625 * ffem / fem,
-                                color: Color(0xff000000),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+  ///If the future isn't completed, shows 'calculating'. Else shows inference time.
+  Widget inferenceTimeWidget(String result) {
+    return Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Text(result,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Colors.black,
+            )));
   }
 }

@@ -63,7 +63,7 @@ class _MyAppState extends State<MyApp> {
         ?.listen((event) =>
             log("Recognition Result: " + event["recognitionResult"].toString()),
             )
-        .onDone(() => isRecording.value = false);
+        .onDone(() => isRecording.value = false); //실시간 코드로 변경하기 (print("완료"));
   }
 
 

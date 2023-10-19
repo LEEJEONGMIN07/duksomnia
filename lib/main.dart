@@ -180,7 +180,7 @@ class _MyAppState extends State<MyApp> {
               if (labels == result && labels != '배경 소음' && predictionPercentage >= 98) {
                 return Padding(
                     padding: const EdgeInsets.all(5.0),
-                    child: Text(labels.toString(),
+                    child: Text(labels.toString(), //predictionpercentage 추가
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,

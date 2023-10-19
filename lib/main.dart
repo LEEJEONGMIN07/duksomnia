@@ -114,7 +114,7 @@ class _MyAppState extends State<MyApp> {
                             }
                           case ConnectionState.waiting:
 
-                            ///Widets will let the user know that its loading when waiting for results
+                            ///(로딩 중) 출력 => 위치 수정해야함
                             return Stack(children: <Widget>[
                               Align(
                                   alignment: Alignment.bottomRight,
@@ -213,5 +213,5 @@ class _MyAppState extends State<MyApp> {
               fontSize: 20,
               color: Colors.black,
             )));
-  }
+  } /// 수정
 }

@@ -22,7 +22,6 @@ class _MyAppState extends State<MyApp> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final isRecording = ValueNotifier<bool>(false);
   Stream<Map<dynamic, dynamic>>? result;
-  List<String> labels = []; // 라벨 리스트
   List<double> predictionPercentages = []; // 예측 퍼센티지 리스트
 
   final String model = 'assets/model.tflite';

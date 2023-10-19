@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
 
 
 
-  ///fetches the labels from the text file in assets
+  ///_labellist 생성
   Future<List<String>> fetchLabelList() async {
     List<String> _labelList = [];
     await rootBundle.loadString(this.label).then((q) {
@@ -83,6 +83,8 @@ class _MyAppState extends State<MyApp> {
   String showResult(AsyncSnapshot snapshot, String key) =>
       snapshot.hasData ? snapshot.data[key].toString() : '0 ';
 
+
+  /// UI
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -143,7 +145,7 @@ class _MyAppState extends State<MyApp> {
                 builder: (context, value, widget) {
                   if (value == false) {
                     return FloatingActionButton(
-                      //버튼
+                      // 녹음 시작 버튼
                       onPressed: () {
                         isRecording.value = true;
                         setState(() {

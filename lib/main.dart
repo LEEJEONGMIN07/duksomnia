@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api, prefer_interpolation_to_compose_strings, no_leading_underscores_for_local_identifiers, unnecessary_this, unused_local_variable
-
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:developer';
@@ -23,16 +21,49 @@ class _MyAppState extends State<MyApp> {
   final isRecording = ValueNotifier<bool>(false);
   Stream<Map<dynamic, dynamic>>? result;
 
+  ///example values for decodedwav models
+  // final String model = 'assets/decoded_wav_model.tflite';
+  // final String label = 'assets/decoded_wav_label.txt';
+  // final String audioDirectory = 'assets/sample_audio_16k_mono.wav';
+  // final String inputType = 'decodedWav';
+  // final int sampleRate = 16000;
+  // final int bufferSize = 2000;
+  // // final int audioLength = 16000;
+
+  ///example values for google's teachable machine model
   final String model = 'assets/model.tflite';
   final String label = 'assets/labels.txt';
   final String inputType = 'rawAudio';
+  final String audioDirectory = 'assets/sample_audio_44k_mono.wav';
   final int sampleRate = 44100;
   final int bufferSize = 11016;
+  // final int audioLength = 44032;
+
+  ///example values for MFCC, melspectrogram, spectrogram models
+  // final String model = 'assets/spectrogram_model.tflite';
+  // final String label = 'assets/spectrogram_label.txt';
+  // final String inputType = 'spectrogram';
+
+  // final String model = 'assets/melspectrogram_model.tflite';
+  // final String label = 'assets/melspectrogram_label.txt';
+  // final String inputType = 'melSpectrogram';
+
+  // final String model = 'assets/mfcc_model.tflite';
+  // final String label = 'assets/mfcc_label.txt';
+  // final String inputType = 'mfcc';
+
+  // final String audioDirectory = 'assets/sample_audio_16k_mono.wav';
+  // final int sampleRate = 16000;
+  // final int bufferSize = 2000;
+  // // final int audioLength = 16000;
+
+  ///Optional parameters you can adjust to modify your input and output
   final bool outputRawScores = false;
   final int numOfInferences = 5;
   final int numThreads = 1;
   final bool isAsset = true;
 
+  ///Adjust the values below when tuning model detection.
   final double detectionThreshold = 0.3;
   final int averageWindowDuration = 1000;
   final int minimumTimeBetweenSamples = 30;
@@ -42,31 +73,54 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     TfliteAudio.loadModel(
+      // numThreads: this.numThreads,
+      // isAsset: this.isAsset,
+      // outputRawScores: outputRawScores,
       inputType: inputType,
       model: model,
       label: label,
     );
+
+    //spectrogram parameters
+    // TfliteAudio.setSpectrogramParameters(nFFT: 256, hopLength: 129);
+
     // mfcc parameters
     TfliteAudio.setSpectrogramParameters(nMFCC: 40, hopLength: 16384);
   }
 
   void getResult() {
+    ///example for stored audio file recognition
+    // result = TfliteAudio.startFileRecognition(
+    //   audioDirectory: audioDirectory,
+    //   sampleRate: sampleRate,
+    //   // audioLength: audioLength,
+    //   // detectionThreshold: detectionThreshold,
+    //   // averageWindowDuration: averageWindowDuration,
+    //   // minimumTimeBetweenSamples: minimumTimeBetweenSamples,
+    //   // suppressionTime: suppressionTime,
+    // );
+
+    ///example for recording recognition
     result = TfliteAudio.startAudioRecognition(
       sampleRate: sampleRate,
       bufferSize: bufferSize,
       numOfInferences: numOfInferences,
+      // audioLength: audioLength,
+      // detectionThreshold: detectionThreshold,
+      // averageWindowDuration: averageWindowDuration,
+      // minimumTimeBetweenSamples: minimumTimeBetweenSamples,
+      // suppressionTime: suppressionTime,
     );
 
+    ///Below returns a map of values. The keys are:
+    ///"recognitionResult", "hasPermission", "inferenceTime"
     result
         ?.listen((event) =>
-            log("Recognition Result: " + event["recognitionResult"].toString()),
-            )
-        .onDone(() => isRecording.value = false); //실시간 코드로 변경하기 (print("완료"));
+        log("Recognition Result: " + event["recognitionResult"].toString()))
+        .onDone(() => isRecording.value = false);
   }
 
-
-
-  ///_labellist 생성
+  ///fetches the labels from the text file in assets
   Future<List<String>> fetchLabelList() async {
     List<String> _labelList = [];
     await rootBundle.loadString(this.label).then((q) {
@@ -81,15 +135,13 @@ class _MyAppState extends State<MyApp> {
   String showResult(AsyncSnapshot snapshot, String key) =>
       snapshot.hasData ? snapshot.data[key].toString() : '0 ';
 
-
-  /// UI
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
             key: _scaffoldKey,
             appBar: AppBar(
-              title: const Text('earZing'),
+              title: const Text('Tflite-audio/speech'),
             ),
 
             ///Streambuilder for inference results
@@ -104,7 +156,7 @@ class _MyAppState extends State<MyApp> {
                           AsyncSnapshot<List<String>> labelSnapshot) {
                         switch (inferenceSnapshot.connectionState) {
                           case ConnectionState.none:
-                            //Loads the asset file.
+                          //Loads the asset file.
                             if (labelSnapshot.hasData) {
                               return labelListWidget(labelSnapshot.data);
                             } else {
@@ -112,21 +164,21 @@ class _MyAppState extends State<MyApp> {
                             }
                           case ConnectionState.waiting:
 
-                            ///(로딩 중) 출력 => 위치 수정해야함
+                          ///Widets will let the user know that its loading when waiting for results
                             return Stack(children: <Widget>[
                               Align(
                                   alignment: Alignment.bottomRight,
-                                  child: inferenceTimeWidget('듣고있어요..')),
+                                  child: inferenceTimeWidget('calculating..')),
                               labelListWidget(labelSnapshot.data),
                             ]);
 
-                          ///Widgets will display the final results.
+                        ///Widgets will display the final results.
                           default:
                             return Stack(children: <Widget>[
                               Align(
                                   alignment: Alignment.bottomRight,
                                   child: inferenceTimeWidget(showResult(
-                                          inferenceSnapshot, 'inferenceTime') +
+                                      inferenceSnapshot, 'inferenceTime') +
                                       'ms')),
                               labelListWidget(
                                   labelSnapshot.data,
@@ -137,13 +189,12 @@ class _MyAppState extends State<MyApp> {
                       });
                 }),
             floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
+            FloatingActionButtonLocation.centerFloat,
             floatingActionButton: ValueListenableBuilder(
                 valueListenable: isRecording,
                 builder: (context, value, widget) {
                   if (value == false) {
                     return FloatingActionButton(
-                      // 녹음 시작 버튼
                       onPressed: () {
                         isRecording.value = true;
                         setState(() {
@@ -172,15 +223,11 @@ class _MyAppState extends State<MyApp> {
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: labelList!.asMap().entries.map((entry) {
-              final index = entry.key;
-              final labels = entry.value;
-              final predictionPercentage = predictionPercentages[index];
-              //결과 출력
-              if (labels == result && labels != '배경 소음' && predictionPercentage >= 98) {
+            children: labelList!.map((labels) {
+              if (labels == result) {
                 return Padding(
                     padding: const EdgeInsets.all(5.0),
-                    child: Text(labels.toString(), //predictionpercentage 추가
+                    child: Text(labels.toString(),
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
@@ -211,5 +258,5 @@ class _MyAppState extends State<MyApp> {
               fontSize: 20,
               color: Colors.black,
             )));
-  } /// 수정
+  }
 }

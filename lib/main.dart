@@ -6,6 +6,7 @@ import 'dart:developer';
 import 'package:tflite_audio/tflite_audio.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
+import 'package:vibration/vibration.dart';
 
 void main() => runApp(const MyApp());
 

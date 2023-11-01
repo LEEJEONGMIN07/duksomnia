@@ -174,6 +174,7 @@ class _MyAppState extends State<MyApp> {
               
               //결과 출력
               if (labels == result && labels != '배경 소음') {
+                Vibration.vibrate(pattern: [500, 1000, 500, 2000]);
                 return Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: Text(labels.toString(),

@@ -8,9 +8,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/safe-mode.dart';
 //import 'main.dart';
 
-//import 'package:myapp/page-1/sound-variation.dart';
+import 'package:flutter_application_1/sound-variation.dart';
 
-//import 'package:myapp/page-1/keyword.dart';
+import 'package:flutter_application_1/keyword.dart';
 
 class settings extends StatefulWidget {
   @override
@@ -230,8 +230,8 @@ class _settingsState extends State<settings> {
                   TextButton(
                     // fibsangleright5oo (201:147)
                     onPressed: () {
-                      // Navigator.push(
-                      //     context, MaterialPageRoute(builder: (_) => soundvariation()));
+                       Navigator.push(
+                           context, MaterialPageRoute(builder: (_) => soundvariation()));
                     },
                     style: TextButton.styleFrom (
                       padding: EdgeInsets.zero,
@@ -312,6 +312,7 @@ class _settingsState extends State<settings> {
                               onChanged: (bool? value) {
                                 // This is called when the user toggles the switch.
                                 setState(() {
+                                  //푸시알림켜짐 값
                                   switchValue_push = value ?? false;
                                 });
                               },
@@ -384,6 +385,7 @@ class _settingsState extends State<settings> {
                                 onChanged: (bool? value) {
                                   // This is called when the user toggles the switch.
                                   setState(() {
+                                    //진동알림켜짐 값
                                     switchValue_zing = value ?? false;
                                   });
                                 },
@@ -431,6 +433,7 @@ class _settingsState extends State<settings> {
                               onChanged: (bool? value) {
                                 // This is called when the user toggles the switch.
                                 setState(() {
+                                  //전체화면알림 값
                                   switchValue_full = value ?? false;
                                 });
                               },
@@ -487,9 +490,11 @@ class _settingsState extends State<settings> {
                     // fibsanglerightcc1 (201:146)
                     margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 0*fem, 0*fem),
                     child: TextButton(
+                      //키워드 설정 버튼
                       onPressed: () {
-                        // Navigator.push(
-                        //     context, MaterialPageRoute(builder: (_) => keyword()));
+                         Navigator.push(
+                             context, MaterialPageRoute(builder: (_) => keyword()));
+                         //다른 페이지를 추가하고 싶다면 맨 위 임포트문 수정하고 이름 바꾸기
                       },
                       style: TextButton.styleFrom (
                         padding: EdgeInsets.zero,

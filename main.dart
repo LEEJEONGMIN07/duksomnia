@@ -10,7 +10,18 @@ import 'package:flutter_application_1/utils.dart';
 
 // import 'package:vibration/vibration.dart';
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
+//hyesun import
+// import 'package:flutter/material.dart';
+// import 'package:flutter/gestures.dart';
+// import 'dart:ui';
+// import 'package:google_fonts/google_fonts.dart';
+// import 'package:myapp/page-1/settings.dart';
+// import 'package:myapp/utils.dart';
+// import 'package:myapp/page-1/sound-variation.dart';
+// import 'package:myapp/page-1/sound-variation-setting.dart';
+// import 'package:myapp/page-1/keyword.dart';
+// import 'package:myapp/page-1/keyword-making.dart';
+// import 'package:myapp/page-1/full-alarm.dart';
 void main() {
   runApp(MyApp());
 }

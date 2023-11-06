@@ -44,6 +44,7 @@ dependencies:
   # vibration: ^1.8.1
   flarelane_flutter: ^1.3.1
   google_fonts: ^6.1.0
+  charts_flutter: ^0.12.0
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,72 @@ flutter:
     - assets/icon.png
     - assets/setting.png
     - assets/icon2.png
+    - assets/page-1/images/.png
+    - assets/page-1/images/group-6.png
+    - assets/page-1/images/frame.png
+    - assets/page-1/images/setting-two.png
+    - assets/page-1/images/-d29.png
+    - assets/page-1/images/-Zvh.png
+    - assets/page-1/images/fi-bs-angle-left.png
+    - assets/page-1/images/setting-two-kGy.png
+    - assets/page-1/images/-4MX.png
+    - assets/page-1/images/setting-two-rC1.png
+    - assets/page-1/images/-gKT.png
+    - assets/page-1/images/fi-bs-angle-right.png
+    - assets/page-1/images/frame-EHF.png
+    - assets/page-1/images/-evd.png
+    - assets/page-1/images/-1hB.png
+    - assets/page-1/images/-fsX.png
+    - assets/page-1/images/-JB3.png
+    - assets/page-1/images/-gkZ.png
+    - assets/page-1/images/-aUZ.png
+    - assets/page-1/images/-hi9.png
+    - assets/page-1/images/-ZsP.png
+    - assets/page-1/images/-ZZs.png
+    - assets/page-1/images/fi-bs-angle-right-Rd3.png
+    - assets/page-1/images/-2Ly.png
+    - assets/page-1/images/-qHj.png
+    - assets/page-1/images/setting-two-DuB.png
+    - assets/page-1/images/fi-br-plus.png
+    - assets/page-1/images/fi-bs-angle-left-TB7.png
+    - assets/page-1/images/polygon-1.png
+    - assets/page-1/images/-5us.png
+    - assets/page-1/images/vector-1.png
+    - assets/page-1/images/vector-3.png
+    - assets/page-1/images/frame-uGV.png
+    - assets/page-1/images/setting-two-G73.png
+    - assets/page-1/images/-bPX.png
+    - assets/page-1/images/-Z5T.png
+    - assets/page-1/images/fi-bs-angle-right-uf7.png
+    - assets/page-1/images/-VFw.png
+    - assets/page-1/images/fi-bs-angle-right-gBK.png
+    - assets/page-1/images/vector-3-VHB.png
+    - assets/page-1/images/-QD7.png
+    - assets/page-1/images/fi-bs-angle-left-8xy.png
+    - assets/page-1/images/-kmw.png
+    - assets/page-1/images/group-5.png
+    - assets/page-1/images/fi-bs-angle-left-vKT.png
+    - assets/page-1/images/-bku.png
+    - assets/page-1/images/-jRB.png
+    - assets/page-1/images/fi-bs-angle-right-7Ny.png
+    - assets/page-1/images/setting-two-5pu.png
+    - assets/page-1/images/fi-bs-angle-right-kru.png
+    - assets/page-1/images/-W1F.png
+    - assets/page-1/images/frame-yrR.png
+    - assets/page-1/images/vector-1-1pu.png
+    - assets/page-1/images/-pgH.png
+    - assets/page-1/images/-jqs.png
+    - assets/page-1/images/-5mK.png
+    - assets/page-1/images/frame-19B.png
+    - assets/page-1/images/-4XK.png
+    - assets/page-1/images/union.png
+    - assets/page-1/images/union-Pe9.png
+    - assets/page-1/images/union-MjF.png
+    - assets/page-1/images/union-1UD.png
+    - assets/page-1/images/icon.png
+    - assets/page-1/images/-7mb.png
+    - assets/model.tflite
+    - assets/labels.txt
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

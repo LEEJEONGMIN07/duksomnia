@@ -81,9 +81,9 @@ class _safemodeState extends State<safemode> {
 
 
   //slider var
-  double _currentSliderValue = 50;
+  double _currentSliderValue = 10;
   String? _sliderStatus;
-
+  double barWidth = 100.0; // 변수로 막대 그래프의 너비를 조절
   //image change
   String icon = 'assets/page-1/images/frame-EHF.png';
   String smile = 'assets/page-1/images/frame-EHF.png';
@@ -129,7 +129,7 @@ class _safemodeState extends State<safemode> {
         // safemodeehw (241:398)
 
         width: double.infinity,
-        height: 858 * fem,
+        height: 1200 * fem,
         decoration: BoxDecoration(
           color: Color(0xffffffff),
         ),
@@ -388,11 +388,12 @@ class _safemodeState extends State<safemode> {
                 ),
               ),
             Positioned(
+              //위험 소리 라벨링 결과 출력 컨테이너
               // db1928305Bw (224:148)
               left: 20*fem,
               top: 430*fem,
               child: Visibility(
-                visible: pop,
+                visible: true,
 
               child: Align(
                 child: SizedBox(
@@ -420,9 +421,11 @@ class _safemodeState extends State<safemode> {
                       ),
                       children: [
                         TextSpan(
+                          //라벨링결과와 데시벨
                           text: '🚨 사이렌  소리 | 100dB\n',
                         ),
                         TextSpan(
+                          //현재 시간 표시
                           text: '19시 28분 30초 (--초)\n',
                           style: SafeGoogleFont (
                             'Nunito',
@@ -443,7 +446,7 @@ class _safemodeState extends State<safemode> {
             Positioned( //실시간 음향 분석 그래프 박스 시작
               // QH7 (241:426)
               left: 20 * fem,
-              top: up*fem, //424
+              top: 520*fem, //424
               child: Container(
                 padding: EdgeInsets.fromLTRB(
                     20 * fem, 19 * fem, 20 * fem, 20 * fem),
@@ -511,7 +514,7 @@ class _safemodeState extends State<safemode> {
                     Container(
                       // autogroup3nv7v2V (8fdKsTT3ZLg7Gi6TTE3NV7)
                       margin: EdgeInsets.fromLTRB(
-                          1 * fem, 0 * fem, 0 * fem, 10 * fem),
+                          1 * fem, 20 * fem, 0 * fem, 20 * fem),
                       width: double.infinity,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -519,7 +522,7 @@ class _safemodeState extends State<safemode> {
                           Container(
                             // 3cu (241:431)
                             margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 10 * fem, 0 * fem),
+                                0 * fem, 0 * fem, 26 * fem, 0 * fem),
                             child: Text(
                               '자동차 경적 소리 ',
                               style: SafeGoogleFont(
@@ -533,61 +536,20 @@ class _safemodeState extends State<safemode> {
                           ),
                           Container(
                             //slider
-                            margin: EdgeInsets.fromLTRB(
+                            padding: EdgeInsets.fromLTRB(
                                 0 * fem, 0 * fem, 0 * fem, 0 * fem),
                             // width: 50*fem,
-                            height: 48 * fem,
+                            height: 15 * fem,
+                            //width: 175 * fem,
+                            //color: Colors.red,
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                // Display the current slider value.
-                                //Text('$_currentSliderValue'),
-                                SliderTheme(
-                                  data: SliderThemeData(
-                                    activeTrackColor: Color(0xff4c88fb),
-                                    inactiveTrackColor: Color(0xfff5f6f9),
-                                    thumbColor: Color(0xff4c88fb),
-                                    trackHeight: 18,
-
-                                  ),
-                                  child: Slider(
-                                    key: const Key('slider'),
-                                    value: _currentSliderValue,
-
-                                    divisions: 10,
-
-                                    max: 100,
-
-                                    // onChangeStart: (double value) {
-                                    //   setState(() {
-                                    //     _sliderStatus = 'Sliding';
-                                    //   });
-                                    // },
-                                    // // This is called when sliding has ended.
-                                    // onChangeEnd: (double value) {
-                                    //   setState(() {
-                                    //     _sliderStatus = 'Finished sliding';
-                                    //   });
-                                    // },
-                                    // This is called when slider value is changed.
-                                    onChanged: (double value) {
-
-                                      setState(() {
-                                        _currentSliderValue = value;
-                                      });
-                                    },
-                                  ),
-                                ),
-
+                              children: [
+                                //Text('가로 막대 그래프'),
+                                SizedBox(height: 0),
+                                BarChart(width: 120),
+                                //여기서 width값을 데시벨 값과 연결해야함
                               ],
-
-
-                              // rectangle14mYu (241:472)
-                              // width: 30*fem,
-                              // height: 15*fem,
-                              // decoration: BoxDecoration (
-                              //   borderRadius: BorderRadius.circular(30*fem),
-                              //   color: Color(0xff4c88fb),
                             ),
                           ),
                         ],
@@ -604,7 +566,7 @@ class _safemodeState extends State<safemode> {
                           Container(
                             // 3WR (241:433)
                             margin: EdgeInsets.fromLTRB(
-                                0 * fem, 1 * fem, 50 * fem, 0 * fem),
+                                0 * fem, 1 * fem, 48 * fem, 0 * fem),
                             child: Text(
                               '사이렌 소리 ',
                               style: SafeGoogleFont(
@@ -617,14 +579,21 @@ class _safemodeState extends State<safemode> {
                             ),
                           ),
                           Container(
-                            // rectangle5A5F (241:442)
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 0 * fem, 1 * fem),
-                            width: 32 * fem,
+                            //slider
+                            padding: EdgeInsets.fromLTRB(
+                                0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                            // width: 50*fem,
                             height: 15 * fem,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30 * fem),
-                              color: Color(0xff4c88fb),
+                            //width: 175 * fem,
+                            //color: Colors.red,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                //Text('가로 막대 그래프'),
+                                SizedBox(height: 0),
+                                BarChart(width: 120),
+                                //여기서 width값을 데시벨 값과 연결해야함
+                              ],
                             ),
                           ),
                         ],
@@ -641,9 +610,9 @@ class _safemodeState extends State<safemode> {
                           Container(
                             // cxq (241:439)
                             margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 42 * fem, 0 * fem),
+                                0 * fem, 0 * fem, 60 * fem, 0 * fem),
                             child: Text(
-                              '강도사고 소리',
+                              '노크 소리',
                               style: SafeGoogleFont(
                                 'Nunito',
                                 fontSize: 11 * ffem,
@@ -654,12 +623,21 @@ class _safemodeState extends State<safemode> {
                             ),
                           ),
                           Container(
-                            // rectangle6KMT (241:444)
-                            width: 54 * fem,
+                            //slider
+                            padding: EdgeInsets.fromLTRB(
+                                0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                            // width: 50*fem,
                             height: 15 * fem,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30 * fem),
-                              color: Color(0xff4c88fb),
+                            //width: 175 * fem,
+                            //color: Colors.red,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                //Text('가로 막대 그래프'),
+                                SizedBox(height: 0),
+                                BarChart(width: 120),
+                                //여기서 width값을 데시벨 값과 연결해야함
+                              ],
                             ),
                           ),
                         ],
@@ -824,9 +802,9 @@ class _safemodeState extends State<safemode> {
                           Container(
                             // u8d (241:436)
                             margin: EdgeInsets.fromLTRB(
-                                0 * fem, 1 * fem, 56 * fem, 0 * fem),
+                                0 * fem, 1 * fem, 33 * fem, 0 * fem),
                             child: Text(
-                              '노크 소리',
+                              '강도 사고 소리',
                               style: SafeGoogleFont(
                                 'Nunito',
                                 fontSize: 11 * ffem,
@@ -928,7 +906,47 @@ class _safemodeState extends State<safemode> {
                 ),
               ),
             ),
+            Positioned(
+              // db1928305Bw (224:148)
+              left: 20*fem,
+              top: 1000*fem,
+                child: Align(
+                  child: SizedBox(
+                    width: 320*fem,
+                    height: 150*fem,
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(
+                          10 * fem, 12 * fem, 10 * fem, 12 * fem),
+                      decoration: BoxDecoration (
+                        borderRadius: BorderRadius.circular(20*fem),
+                        color: Color(0xfff5f6f9), //0xffffffff
+                        //border: Border.all(color: Color(0xffff5e5e),width: 5),
 
+                      ),
+
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          style: SafeGoogleFont (
+                            'Nunito',
+                            fontSize: 14*ffem,
+                            fontWeight: FontWeight.w700,
+                            height: 1.3625*ffem/fem,
+                            color: Color(0xff000000),
+                          ),
+                          children: [
+                            TextSpan(
+                              text: '연우 지금 인식되는 내용 안녕하세요 하나 둘 셋 넷 다섯 여섯 일곱 여덟 아홉 열',
+                            ),
+
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+            ),
           ],
         ),
       ),
@@ -938,4 +956,23 @@ class _safemodeState extends State<safemode> {
   }
 }
 
+class BarChart extends StatelessWidget {
+  final double width;
+
+  BarChart({required this.width});
+
+  @override
+  Widget build(BuildContext context) {
+    double calculatedWidth = width >= 110 ? 230.0 : width * 2.0 + 15;
+
+    return Container(
+      width: calculatedWidth, // 막대 그래프의 너비 (변수로 조절)
+      height: 20.0, // 막대 그래프의 높이
+      decoration: BoxDecoration(
+        color: Color(0xff4c88fb),
+        borderRadius: BorderRadius.circular(30.0), // 가장자리를 둥글게 만듭니다.
+      ),
+    );
+  }
+}
 

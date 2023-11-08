@@ -1,3 +1,4 @@
+import 'package:flutter_application_1/keyword_copy.dart';
 import 'package:flutter_application_1/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
@@ -9,8 +10,10 @@ import 'package:flutter_application_1/safe-mode.dart';
 //import 'main.dart';
 
 import 'package:flutter_application_1/sound-variation.dart';
-
 import 'package:flutter_application_1/keyword.dart';
+
+import 'package:flutter_application_1/user_word/screen/user-word_screen.dart'; // 사용자 단어 사전 구현한 screen
+
 
 class settings extends StatefulWidget {
   @override
@@ -492,8 +495,9 @@ class _settingsState extends State<settings> {
                     child: TextButton(
                       //키워드 설정 버튼
                       onPressed: () {
-                         Navigator.push(
-                             context, MaterialPageRoute(builder: (_) => keyword()));
+                        Navigator.push(
+                            // context, MaterialPageRoute(builder: (_) => keyword_copy())); 
+                            context, MaterialPageRoute(builder: (_) => UserWordScreen()));
                          //다른 페이지를 추가하고 싶다면 맨 위 임포트문 수정하고 이름 바꾸기
                       },
                       style: TextButton.styleFrom (

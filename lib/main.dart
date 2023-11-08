@@ -35,7 +35,7 @@ class EarZingApp extends StatefulWidget {
   eEarZingAppState createState() => eEarZingAppState();
 }
 
- class eEarZingAppState extends State<EarZingApp> {
+class eEarZingAppState extends State<EarZingApp> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   static final isRecording = ValueNotifier<bool>(false);
   Stream<Map<dynamic, dynamic>>? result;

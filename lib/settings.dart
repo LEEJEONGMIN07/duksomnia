@@ -25,7 +25,7 @@ class _settingsState extends State<settings> {
   bool switchValue_push = false;
   bool switchValue_zing = false;
   bool switchValue_full = false;
-
+  //eEarZingAppState appState = eEarZingAppState();
 
   @override
   Widget build(BuildContext context) {
@@ -114,9 +114,9 @@ class _settingsState extends State<settings> {
                 children: [
                   Container(
                     // TkV (201:121)
-                    margin: EdgeInsets.fromLTRB(0*fem, 4*fem, 135*fem, 0*fem),
+                    margin: EdgeInsets.fromLTRB(0*fem, 4*fem, 165*fem, 0*fem),
                     child: Text(
-                      '알람 모드 켜짐',
+                      '녹음 켜짐',
                       style: SafeGoogleFont (
                         'Nunito',
                         fontSize: 16*ffem,
@@ -139,26 +139,26 @@ class _settingsState extends State<settings> {
                         onChanged: (bool? value) {
                           setState(() {
                             // 스위치 값(value)에 따라 녹음 상태를 변경합니다.
-                            bool recordingStatus = eEarZingAppState.isRecording.value;
-                            recordingStatus = value ?? false;
-
-                            if (recordingStatus) {
-                              // 녹음이 켜질 때 콘솔에 메시지 출력
-                              print('Audio Recording Started');
-                            } else {
-                              // 녹음이 꺼질 때 콘솔에 메시지 출력
-                              print('Audio Recording Stopped');
-                            }
-
-                            // _EarZingAppState 클래스의 인스턴스를 만들고 getResult 메서드 호출
-                            eEarZingAppState appState = eEarZingAppState();
-                            appState.getResult();
-
-                            // 녹음 상태 업데이트
-                            eEarZingAppState.isRecording.value = recordingStatus;
-
-                            // 스위치 값 업데이트
-                            switchValue_alarm = recordingStatus;
+                            // bool recordingStatus = appState.isRecording.value;
+                            // recordingStatus = value ?? false;
+                            //
+                            // if (recordingStatus) {
+                            //   // 녹음이 켜질 때 콘솔에 메시지 출력
+                            //   print('Audio Recording Started');
+                            // } else {
+                            //   // 녹음이 꺼질 때 콘솔에 메시지 출력
+                            //   print('Audio Recording Stopped');
+                            // }
+                            //
+                            // // _EarZingAppState 클래스의 인스턴스를 만들고 getResult 메서드 호출
+                            //
+                            // appState.getResult();
+                            //
+                            // // 녹음 상태 업데이트
+                            // appState.isRecording.value = recordingStatus;
+                            //
+                            // // 스위치 값 업데이트
+                            // switchValue_alarm = recordingStatus;
                           });
                         },
                       ),

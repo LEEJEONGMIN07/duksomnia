@@ -14,7 +14,7 @@ import 'package:noise_meter/noise_meter.dart';
 import 'package:permission_handler/permission_handler.dart'; // 현진 데시벨
 import 'package:flutter_local_notifications/flutter_local_notifications.dart'; // 현진 데시벨
 import 'package:flutter_application_1/flutter_notifications.dart'; //현진
-
+//다시올림
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {

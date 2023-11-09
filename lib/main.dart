@@ -46,7 +46,10 @@ class Main extends StatefulWidget {
   _MainState createState() => _MainState();
 }
 
+
+
 class _MainState extends State<Main> {
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final isRecording = ValueNotifier<bool>(false);
   Stream<Map<dynamic, dynamic>>? result;

@@ -5,6 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_application_1/utils.dart';
 import 'package:flutter_application_1/keyword.dart';
 
+// 연우: 사용자 단어 사전 구현
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/user_word/data/performance.dart'; // 이하: from "user-word_screen.dart"
+import 'package:flutter_application_1/user_word/data/sp_helper.dart';
+
 class keywordmaking extends StatefulWidget {
   @override
   State<keywordmaking> createState() => _keywordmakingState();

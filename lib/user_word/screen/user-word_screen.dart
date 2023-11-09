@@ -58,18 +58,11 @@ class _UserWordScreenState extends State<UserWordScreen> {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
     return Scaffold(
+      backgroundColor: Color(0xffffffff),
       appBar: AppBar(   // 기존 UI 참고하여 appBar 전체 구성 다시 하였음
         centerTitle: true,  // title을 가운데 정렬함
-        // 설정으로 돌아가는 버튼 추가하기 위해 시도해볼 수 있는 코드
-        // leading: Builder(
-        //   builder: (BuildContext context) {
-        //     return IconButton(
-        //       icon: const Icon(Icons.menu),
-        //       onPressed: () { Scaffold.of(context).openDrawer(); },
-        //       tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-        //     );
-        //   },
-        // ),
+        backgroundColor: Color(0xffffffff),
+        elevation: 0, // 그림자 없앰
         leading: TextButton(
           //설정으로 돌아가는 버튼
           onPressed: () {
@@ -79,7 +72,7 @@ class _UserWordScreenState extends State<UserWordScreen> {
           style: TextButton.styleFrom (
             padding: EdgeInsets.zero,
           ),
-          child: SizedBox(  // container -> sizeBox로 수정함
+          child: Container(  // container -> sizeBox로 수정함
             width: 17*fem,
             height: 16*fem,
             child: Image.asset(
@@ -91,25 +84,21 @@ class _UserWordScreenState extends State<UserWordScreen> {
         ),
         title: Container(
           // AKK (14:55)
-          margin: EdgeInsets.fromLTRB(0*fem, 10*fem, 90*fem, 0*fem),
           child: Text(
             '키워드 설정',
-            textAlign: TextAlign.center,
             style: SafeGoogleFont (
               'Nunito',
               fontSize: 16*ffem,
               fontWeight: FontWeight.w800,
-              height: 1.3625*ffem/fem,
               color: Color(0xff000000),
             ),
           ),
         ),
         actions: <Widget> [
           Padding(
-            padding: EdgeInsets.fromLTRB(0*fem, 13*fem, 0*fem, 0*fem),
+            padding: EdgeInsets.fromLTRB(0*fem, 13*fem, 20*fem, 0*fem),
             child: Text(
               '편집',
-              textAlign: TextAlign.center,
               style: SafeGoogleFont (
                       'Nunito',
                       fontSize: 13*ffem,
@@ -121,16 +110,19 @@ class _UserWordScreenState extends State<UserWordScreen> {
           )
         ]
       ),          
+      
       body: ListView(
         padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
         children: getContent(), // getContent(): ListTile 위젯을 만들어 반환함
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          showInputWordDialog(context);
-        },
-      ),
+        ),
+      floatingActionButton: 
+        FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            showInputWordDialog(context);
+          },
+          backgroundColor: Color(0xff4c88fb),
+        ),
     );
   }
 
@@ -139,7 +131,8 @@ class _UserWordScreenState extends State<UserWordScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog( // 사용자에게 표시할 인터페이스를 설정
-          title: const Text('인식할 단어를 입력하세요'),
+          title: const Center(child: Text('인식할 단어를 입력하세요')),
+          iconColor: Color(0xff4c88fb),
           content: SingleChildScrollView(
               child: Column(
             children: [
@@ -151,6 +144,7 @@ class _UserWordScreenState extends State<UserWordScreen> {
           )),
           actions: [
             TextButton(
+              style: ButtonStyle(foregroundColor: MaterialStateProperty.all<Color>(Color(0xff4c88fb))),
               onPressed: () {
                 Navigator.pop(context);
                 txtWord.text = '';
@@ -158,6 +152,7 @@ class _UserWordScreenState extends State<UserWordScreen> {
               child: const Text('Cancel'),
             ),
             ElevatedButton(
+                style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Color(0xff4c88fb))),
                 onPressed: saveUserWord, // saveUserWord : 단어 저장하는 메소드
                 child: const Text('Save'))
           ],
@@ -197,12 +192,11 @@ class _UserWordScreenState extends State<UserWordScreen> {
                 borderRadius: BorderRadius.circular(15),
             ),
           child: ListTile(                          
-            title: Text(performance
-                .word), // performance 객체가 생성되며 txtWord.text(사용자가 입력한 단어)를 인자로 받아오고, performance 객체의 word 필드에 저장됨
+            title: Text(performance.word), // performance 객체가 생성되며 txtWord.text(사용자가 입력한 단어)를 인자로 받아오고, performance 객체의 word 필드에 저장됨
             subtitle: Text('입력 시간: ${performance.date}'),
             onTap: () { // 각 listTile 누르면 실행됨
-              print(performance.word); // 콘솔창에 저장한 단어가 출력됨
-              print(performance.id); // 콘솔창에 저장한 단어가 출력됨
+              log(performance.word); // 콘솔창에 저장한 단어가 출력됨
+              log(performance.id.toString()); // 콘솔창에 저장한 단어의 id가 출력됨
               // 사용자가 한 번 누른 단어만 word Observer 객체의 word_list에 추가함(저장함)
               
             },

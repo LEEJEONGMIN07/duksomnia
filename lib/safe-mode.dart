@@ -1,83 +1,25 @@
 import 'dart:ffi';
 
-import 'package:audioplayers/audioplayers.dart';
+//import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter_application_1/MyGlobals.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_application_1/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/settings.dart';
+import 'package:flutter_application_1/main.dart';
 import 'package:tflite_audio/tflite_audio.dart';
 //import 'package:flutter_application_1/sound-variation-setting.dart';
 
 class safemode extends StatefulWidget {
   @override
   State<safemode> createState() => _safemodeState();
+
 }
 
 class _safemodeState extends State<safemode> {
-  // AudioPlayer audioPlayer = AudioPlayer();
-  // TfliteAudio tfliteAudio = TfliteAudio();
-  // String _sound = " ";
-  // double predictionAccuracy = 98.0;
-  // bool _recording = false;
-  // late Stream<Map<dynamic, dynamic>> result;
-  // String _currentImage = 'assets/icon.png';
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   //모델 로드
-  //   TfliteAudio.loadModel(
-  //       model: 'assets/model.tflite',
-  //       label: 'assets/labels.txt',
-  //       numThreads: 1,
-  //       isAsset: true,
-  //       outputRawScores: true,
-  //       inputType: 'melSpectrogram');
-  // }
-  //
-  // ///녹음 시작
-  // void _recorder() {
-  //   String recognition = "";
-  //   if (!_recording) {
-  //     setState(() => _recording = true);
-  //     result = TfliteAudio.startAudioRecognition(
-  //       sampleRate: 44100,
-  //       bufferSize: 22016,
-  //       numOfInferences: 1,
-  //       detectionThreshold: 0.3,
-  //
-  //     );
-  //     result.listen((event) {
-  //       recognition = event["recognitionResult"];
-  //     }).onDone(() {
-  //       setState(() {
-  //         // _recording = false;
-  //         //background 일 경우 ignore 코드 작성하기
-  //         _sound = recognition.split(" ")[1];
-  //         if (_sound != '배경 소음') {
-  //           _currentImage = _recording ? 'assets/icon2.png' : 'assets/icon.png';
-  //           Text('$_sound' + '가 인식되었습니다.',
-  //               textAlign: TextAlign.center,
-  //               style: TextStyle(
-  //                   fontSize: 26,
-  //                   fontWeight: FontWeight.bold,
-  //                   color: Colors.black));
-  //
-  //           //Vibration.vibrate(duration: 500);
-  //         }
-  //       });
-  //     });
-  //   }
-  // }
-  //
-  // //녹음 멈춤
-  // void _stop() {
-  //   TfliteAudio.stopAudioRecognition();
-  //   setState(() => _recording = false);
-  // }
 
 
   //slider var
@@ -129,12 +71,33 @@ class _safemodeState extends State<safemode> {
         // safemodeehw (241:398)
 
         width: double.infinity,
-        height: 1200 * fem,
+        height: 1600 * fem,
         decoration: BoxDecoration(
           color: Color(0xffffffff),
         ),
         child: Stack(
           children: [
+
+
+            // Positioned(
+            //   // Add this FloatingActionButton
+            //   left: 150 * fem, // Adjust the position as needed
+            //   top: 1200 * fem, // Adjust the position as needed
+            //   child: FloatingActionButton(
+            //
+            //     onPressed: () {
+            //       // Your onPressed logic here
+            //       // For example, start recording
+            //
+            //       appState.isRecording.value = true;
+            //       setState(() {
+            //         appState.getResult();
+            //       });
+            //     },
+            //     backgroundColor: Colors.blue,
+            //     child: Icon(Icons.mic),
+            //   ),
+            // ),
             Positioned(
               // rectangle35kky (241:399)
               left: 0 * fem,
@@ -399,7 +362,8 @@ class _safemodeState extends State<safemode> {
                 child: SizedBox(
                   width: 320*fem,
                   height: 60*fem,
-                  child: Container(
+                  child:
+                  Container(
                     padding: EdgeInsets.fromLTRB(
                         0 * fem, 12 * fem, 0 * fem, 0 * fem),
                     decoration: BoxDecoration (
@@ -422,7 +386,7 @@ class _safemodeState extends State<safemode> {
                       children: [
                         TextSpan(
                           //라벨링결과와 데시벨
-                          text: '🚨 사이렌  소리 | 100dB\n',
+                          text: '이 인식되었습니다.',
                         ),
                         TextSpan(
                           //현재 시간 표시
@@ -547,8 +511,8 @@ class _safemodeState extends State<safemode> {
                               children: [
                                 //Text('가로 막대 그래프'),
                                 SizedBox(height: 0),
-                                BarChart(width: 120),
-                                //여기서 width값을 데시벨 값과 연결해야함
+                                BarChart(width: MyGlobals.dd),
+                                //여기서 width값을 데시벨 값과 연결해야함벨
                               ],
                             ),
                           ),
@@ -915,6 +879,7 @@ class _safemodeState extends State<safemode> {
                     width: 320*fem,
                     height: 150*fem,
                     child: Container(
+                      
                       padding: EdgeInsets.fromLTRB(
                           10 * fem, 12 * fem, 10 * fem, 12 * fem),
                       decoration: BoxDecoration (
@@ -947,12 +912,27 @@ class _safemodeState extends State<safemode> {
                 ),
 
             ),
+            Positioned(
+              left: 20*fem,
+              top: 430*fem,
+               child: Align(
+                child: Container(
+                    
+                  width: 320*fem,
+                  height: 80*fem,
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(30.0)),
+                   child: Main(),
+            ),
+               ),
+            ),
           ],
         ),
       ),
       // ),
       // ),
+
     );
+
   }
 }
 
@@ -963,11 +943,12 @@ class BarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double calculatedWidth = width >= 110 ? 230.0 : width * 2.0 + 15;
+    double calculatedWidth = width >= 110 ? 170.0 : width * 2.0;
 
     return Container(
+
       width: calculatedWidth, // 막대 그래프의 너비 (변수로 조절)
-      height: 20.0, // 막대 그래프의 높이
+      height: 15.0, // 막대 그래프의 높이
       decoration: BoxDecoration(
         color: Color(0xff4c88fb),
         borderRadius: BorderRadius.circular(30.0), // 가장자리를 둥글게 만듭니다.

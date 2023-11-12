@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 Widget buildFloatingActionButton(ValueNotifier<bool> isRecording, Function getResult) {
@@ -16,7 +18,7 @@ Widget buildFloatingActionButton(ValueNotifier<bool> isRecording, Function getRe
       } else {
         return FloatingActionButton(
           onPressed: () {
-            print('Audio Recognition Stopped');
+            log('Audio Recognition Stopped');
             // Stop audio recognition logic
           },
           backgroundColor: Colors.red,

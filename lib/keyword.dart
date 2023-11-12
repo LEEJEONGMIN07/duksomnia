@@ -33,7 +33,7 @@ class _keywordState extends State<keyword> {
 
   @override
   void initState() {  // 초기화
-    helper.init().then((value) {
+    helper.initSharedPreferences().then((value) { // init() -> 수정
       updateScreen(); // ListTile 위젯에 데이터 추가될 때 갱신되도록 함
     });
     super.initState();

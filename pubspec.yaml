@@ -55,7 +55,7 @@ dependencies:
   shared_preferences: ^2.2.1
   # 이하: notification message 구현 위해 추가 (연우)
   # flutter_local_notifications: ^9.6.1
-  timezone: ^0.8.0 
+  timezone: ^0.9.0  # 0.8.0 -> 0.9.0 upgrade (flutter_local_notifications 이 version 0.9.0 에 의존함)
   rxdart: ^0.27.4
   # 이하: 진동 기능 구현 위해 추가 (연우)
   # vibration: ^1.8.3

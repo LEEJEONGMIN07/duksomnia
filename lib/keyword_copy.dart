@@ -35,7 +35,7 @@ class _keyword_copyState extends State<keyword_copy> {
   @override
   void initState() {
     // 초기화
-    helper.init().then((value) {
+    helper.initSharedPreferences().then((value) { // init() -> 수정
       updateScreen(); // ListTile 위젯에 데이터 추가될 때 갱신되도록 함
     });
     super.initState();
@@ -151,16 +151,10 @@ class _keyword_copyState extends State<keyword_copy> {
                 ),
               ),
               Container(  // 임의로 추가한 컨테이너: 리스트뷰 싣기 위한 코드
-                // margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 0*fem, 9*fem),
-                // padding: EdgeInsets.fromLTRB(20*fem, 10*fem, 0*fem, 10*fem),
-                // width: double.infinity,
-                // height: 50*fem,
-                // decoration: BoxDecoration (
-                //   color: Color(0xfff5f6f9),
-                //   borderRadius: BorderRadius.circular(15*fem),
-                // ),
                 child: ListView(  // ListView를 Column 안에 넣기
-                  children: getContent(),
+                  // 연우: 리스트타일 속 각각의 단어 칸에 UI 입히고자 새로 추가한 부분
+                  children: 
+                    getContent(),
                 ),
               ),
             ],
@@ -219,9 +213,12 @@ class _keyword_copyState extends State<keyword_copy> {
     Navigator.pop(context); // dialog를 닫고 이전 화면으로 돌아감
   }
 
-  List<Widget> getContent() {
-    // ListTile 위젯을 만들어 반환하는 메소드
+  List<Widget> getContent() {  // ListTile 위젯을 만들어 반환하는 메소드
     List<Widget> tiles = [];
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    double ffem = fem * 0.97;
+
     performances.forEach((performance) {
       // performance(단어 입력)에 대해 각각 listTile 만들어 tiles에 추가함
       tiles.add(Dismissible(
@@ -233,17 +230,60 @@ class _keyword_copyState extends State<keyword_copy> {
                 .deletePerformance(performance.id)
                 .then((value) => updateScreen()); // 화면 갱신
           },
-          child: ListTile(
-            title: Text(performance
-                .word), // performance 객체가 생성되며 txtWord.text(사용자가 입력한 단어)를 인자로 받아오고, performance 객체의 word 필드에 저장됨
-            subtitle: Text('입력 시간: ${performance.date}'),
-            onTap: () {
-              // 각 listTile 누르면 실행됨
-              print(performance.word); // 콘솔창에 저장한 단어가 출력됨
-              print(performance.id); // 콘솔창에 저장한 단어가 출력됨
-              // 사용자가 한 번 누른 단어만 word Observer 객체의 word_list에 추가함(저장함)
-            },
-          )));
+          child: 
+            InkWell(
+              onTap: () {
+                print(performance.word); // 콘솔창에 저장한 단어가 출력됨
+                print(performance.id); // 콘솔창에 저장한 단어가 출력됨
+              }, 
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15*fem),
+                ),
+                child: 
+                  ListTile(
+                    titleTextStyle: SafeGoogleFont ( // UI > keyword > container '불이야' 부분에서 가져옴
+                      'Nunito',
+                      fontSize: 16*ffem,
+                      fontWeight: FontWeight.w800,
+                      height: 1.3625*ffem/fem,
+                      color: Color(0xff000000),
+                    ),
+                    title: Text(
+                      performance.word, // performance 객체가 생성되며 txtWord.text(사용자가 입력한 단어)를 인자로 받아오고, performance 객체의 word 필드에 저장됨
+                    ), 
+                    subtitle: Text('입력 시간: ${performance.date}'),
+                    )
+                  // ListTile(
+                  // leading: Icon(Icons.star),
+                  // title: Text('Item 1'),
+                  // subtitle: Text('Description for Item 1'),
+                ),
+              ),      
+
+
+          // ListTile(
+          //   titleTextStyle: SafeGoogleFont ( // UI > keyword > container '불이야' 부분에서 가져옴
+          //     'Nunito',
+          //     fontSize: 16*ffem,
+          //     fontWeight: FontWeight.w800,
+          //     height: 1.3625*ffem/fem,
+          //     color: Color(0xff000000),
+          //   ),
+          //   title: Text(
+          //     performance.word, // performance 객체가 생성되며 txtWord.text(사용자가 입력한 단어)를 인자로 받아오고, performance 객체의 word 필드에 저장됨
+          //   ), 
+          //   subtitle: Text('입력 시간: ${performance.date}'),
+          //   onTap: () {
+          //     // 각 listTile 누르면 실행됨
+          //     print(performance.word); // 콘솔창에 저장한 단어가 출력됨
+          //     print(performance.id); // 콘솔창에 저장한 단어가 출력됨
+          //     // 사용자가 한 번 누른 단어만 word Observer 객체의 word_list에 추가함(저장함)
+          //   },
+          // )
+
+        )
+      );
     });
     return tiles;
   }

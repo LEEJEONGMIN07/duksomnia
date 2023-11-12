@@ -1,5 +1,6 @@
 import 'dart:ffi';
-
+import 'dart:math';
+import 'dart:async';
 //import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
@@ -37,31 +38,66 @@ class _safemodeState extends State<safemode> {
   String smile = 'assets/page-1/images/frame-EHF.png';
   String angry = 'assets/page-1/images/frame.png';
   //circle change 캐릭터 들어있는 원
+  var character = Color(0xff4c88fb);
   var _blue_c = Color(0xff4c88fb);
   var _red_c = Color(0xffff5d5d);
   // background color change
+  var backgrond = Color(0xff97d5f8);
   var _blue_b = Color(0xff97d5f8);
   var _red_b = Color(0xffff9b9b);
   // background gradation color chahge
+  String ground = 'assets/page-1/images/union-Pe9.png';
   String blue_g = 'assets/page-1/images/union-Pe9.png';
   String red_g = 'assets/page-1/images/union.png';
   //pop up visibility
-  bool pop = false;
-  bool push = true;
-  //graph position
-  int up = 424;
-  int down = 520;
-
-  // String icon = "";
-  // List<String> selectIcon = [
-  //   'assets/page-1/images/frame.png',
-  //   'assets/page-1/images/frame-EHF.png',
-  // ];
+  // bool pop = false;
+  // bool push = true;
+  // //graph position
+  // int up = 424;
+  // int down = 520;
 
   var text = "text. 음성 인식 코드 작동 확인용"; // 코드 작동 확인용 임시 변수
   // _MainState main01 = _MainState();
 
   @override
+  void initState() {
+    super.initState();
+
+    // 1초마다 _updateUI 함수를 호출하여 UI를 업데이트합니다.
+    Timer.periodic(Duration(milliseconds: 1), (timer) {
+      _updateUI();
+    });
+  }
+
+  void _updateUI() {
+    // 여기서 상태를 변경하고 UI를 업데이트합니다.
+    // 예를 들어, _currentSliderValue 값을 변경하거나 다른 변수를 수정할 수 있습니다.
+
+    if (MyGlobals.mode == 2) {
+      BarChart();
+      icon = angry;
+      character = _red_c;
+      backgrond = _red_b;
+      ground = red_g;
+      // 추가적인 UI 업데이트 코드...
+    } else {
+      icon = smile;
+      character = _blue_c;
+      backgrond = _blue_b;
+      ground = blue_g;
+      // 추가적인 UI 업데이트 코드...
+    }
+
+    // setState를 호출하여 UI를 다시 그리도록 합니다.
+    setState(() {
+      // 여기에 UI를 업데이트하는 코드를 추가하세요.
+
+      // 예: _currentSliderValue = 새로운 값;
+      //     barWidth = 새로운 값;
+      //     icon = 'assets/새로운이미지.png';
+      //     등등...
+    });
+  }
   Widget build(BuildContext context) {
     double baseWidth = 360;
     double fem = MediaQuery.of(context).size.width / baseWidth;
@@ -91,7 +127,7 @@ class _safemodeState extends State<safemode> {
                 height: 800 * fem,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: _blue_b,
+                    color: backgrond,
                   ),
                 ),
               ),
@@ -107,7 +143,7 @@ class _safemodeState extends State<safemode> {
                 height: 594 * fem,
                 child: Image.asset(
                   //뒷배언
-                  blue_g,
+                  ground,
                   width: 401 * fem,
                   height: 594 * fem,
                 ),
@@ -144,7 +180,7 @@ class _safemodeState extends State<safemode> {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(91 * fem),
-                    color: _blue_c,
+                    color: character,
                     //0xffff5d5d
                     //0xff4c88fb
                   ),
@@ -306,12 +342,7 @@ class _safemodeState extends State<safemode> {
                 child: TextButton(
                   onPressed: () {
                     setState(() {
-                      icon = angry;
-                      _blue_c = _red_c;
-                      _blue_b = _red_b;
-                      blue_g = red_g;
-                      up = down;
-                      pop = push;
+
                     });
                   },
                   // style: TextButton.styleFrom(
@@ -485,7 +516,7 @@ class _safemodeState extends State<safemode> {
                             children: [
                               //Text('가로 막대 그래프'),
                               SizedBox(height: 0),
-                              BarChart(width: MyGlobals.dd),
+                              BarChart(),
                               //여기서 width값을 데시벨 값과 연결해야함벨
                             ],
                           ),
@@ -529,7 +560,7 @@ class _safemodeState extends State<safemode> {
                             children: [
                               //Text('가로 막대 그래프'),
                               SizedBox(height: 0),
-                              BarChart(width: 120),
+                              BarChart(),
                               //여기서 width값을 데시벨 값과 연결해야함
                             ],
                           ),
@@ -573,7 +604,7 @@ class _safemodeState extends State<safemode> {
                             children: [
                               //Text('가로 막대 그래프'),
                               SizedBox(height: 0),
-                              BarChart(width: 120),
+                              BarChart(),
                               //여기서 width값을 데시벨 값과 연결해야함
                             ],
                           ),
@@ -982,22 +1013,36 @@ class _safemodeState extends State<safemode> {
   }
 }
 
-class BarChart extends StatelessWidget {
-  final double width;
+class BarChart extends StatefulWidget {
+  @override
+  State<BarChart> createState() => _BarChartState();
+}
 
-  BarChart({required this.width});
-
+class _BarChartState extends State<BarChart> {
   @override
   Widget build(BuildContext context) {
-    double calculatedWidth = width >= 110 ? 170.0 : width * 2.0;
+    return buildBarChart();
+  }
+
+  Widget buildBarChart() {
+    double calculatedWidth = MyGlobals.dd >= 110 ? 170.0 : MyGlobals.dd * 2.0;
 
     return Container(
-      width: calculatedWidth, // 막대 그래프의 너비 (변수로 조절)
-      height: 15.0, // 막대 그래프의 높이
+      width: calculatedWidth,
+      height: 15.0,
       decoration: BoxDecoration(
         color: Color(0xff4c88fb),
-        borderRadius: BorderRadius.circular(30.0), // 가장자리를 둥글게 만듭니다.
+        borderRadius: BorderRadius.circular(30.0),
       ),
     );
+  }
+
+  @override
+  void didUpdateWidget(BarChart oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // MyGlobals.dd가 변경될 때마다 BarChart를 다시 그리기 위해 setState 호출
+    if (MyGlobals.dd != null) {
+      setState(() {});
+    }
   }
 }

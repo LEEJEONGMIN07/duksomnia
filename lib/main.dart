@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, prefer_interpolation_to_compose_strings, no_leading_underscores_for_local_identifiers, unnecessary_this, unused_local_variable, prefer_const_constructors, unused_import, sized_box_for_whitespace, unrelated_type_equality_checks, prefer_const_literals_to_create_immutables, unused_field, prefer_final_fields, non_constant_identifier_names, unused_element, unnecessary_import
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter_application_1/utils.dart';
 import 'package:flutter_application_1/safe-mode.dart';
 import 'package:flutter_application_1/MyGlobals.dart';
@@ -81,28 +82,7 @@ class _MainState extends State<Main> {
   late NoiseMeter _noiseMeter;
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
-  double _currentSliderValue = 10;
-  String? _sliderStatus;
-  double barWidth = 100.0; // 변수로 막대 그래프의 너비를 조절
-  //image change
-  String icon = 'assets/page-1/images/frame-EHF.png';
-  String smile = 'assets/page-1/images/frame-EHF.png';
-  String angry = 'assets/page-1/images/frame.png';
-  //circle change 캐릭터 들어있는 원
-  var _blue_c = Color(0xff4c88fb);
-  var _red_c = Color(0xffff5d5d);
-  // background color change
-  var _blue_b = Color(0xff97d5f8);
-  var _red_b = Color(0xffff9b9b);
-  // background gradation color chahge
-  String blue_g = 'assets/page-1/images/union-Pe9.png';
-  String red_g = 'assets/page-1/images/union.png';
-  //pop up visibility
-  bool pop = false;
-  bool push = true;
-  //graph position
-  int up = 424;
-  int down = 520;
+
   static late double decibel;
 
   // 이하: 연우 STT 기능 연동
@@ -124,7 +104,7 @@ class _MainState extends State<Main> {
     );
     TfliteAudio.setSpectrogramParameters(nMFCC: 40, hopLength: 16384);
     //현진추가부분
-    // _initializeNoiseMeter(); // STT 확인 위해 임시 주석처리, 이 부분은 조건문 내로 옮겨야 함. 변수 선언에 있을 내용이 아님
+     _initializeNoiseMeter(); // STT 확인 위해 임시 주석처리, 이 부분은 조건문 내로 옮겨야 함. 변수 선언에 있을 내용이 아님
     //_initializeLocalNotifications();
     _requestMicrophonePermission();
     FlutterLocalNotification.init();
@@ -137,24 +117,25 @@ class _MainState extends State<Main> {
   }
 
 //현진추가부분
-  // Future<void> _initializeNoiseMeter() async {
-  //   _noiseMeter = NoiseMeter();
-  //   try {
-  //     //_noiseMeter.toString();
+  Future<void> _initializeNoiseMeter() async {
+    _noiseMeter = NoiseMeter();
+    try {
+      //_noiseMeter.toString();
 
-  //     _noiseMeter.noise.listen((NoiseReading noiseReading) {
-  //       log("decibel : ${noiseReading.meanDecibel}");
-  //       MyGlobals.dd = noiseReading.meanDecibel;
+      _noiseMeter.noise.listen((NoiseReading noiseReading) {
+        //log("decibel : ${noiseReading.meanDecibel}");
+        log("mode : ${MyGlobals.mode}");
+        MyGlobals.dd = noiseReading.meanDecibel;
 
-  //       if (noiseReading.meanDecibel > 60.0 && labels == result) {
-  //         FlutterLocalNotification.showNotification(
-  //             title: '반응', body: '100db 이상 소음 발생'); //60db이 되면 알림이 오도록
-  //       }
-  //     });
-  //   } catch (e) {
-  //     log('Failed to initialize noise meter: $e');
-  //   }
-  // }
+        if (noiseReading.meanDecibel > 60.0 && labels == result) {
+          FlutterLocalNotification.showNotification(
+              title: '반응', body: '100db 이상 소음 발생'); //60db이 되면 알림이 오도록
+        }
+      });
+    } catch (e) {
+      log('Failed to initialize noise meter: $e');
+    }
+  }
 
   Future<void> _requestMicrophonePermission() async {
     final status = await Permission.microphone.request();
@@ -216,7 +197,7 @@ class _MainState extends State<Main> {
                               return labelListWidget(labelSnapshot.data);
                             } else {
                               return const CircularProgressIndicator();
-                            }
+                            } break;
                           case ConnectionState.waiting:
                             return Stack(children: <Widget>[
                               Align(
@@ -224,7 +205,7 @@ class _MainState extends State<Main> {
                               ),
                               labelListWidget(labelSnapshot.data),
                             ]);
-
+                            break;
                           ///Widgets will display the final results.
                           default:
                             return Stack(children: <Widget>[
@@ -252,45 +233,6 @@ class _MainState extends State<Main> {
                         isRecording.value = true;
                         setState(() {
                           getResult();
-                          // // 이하: 연우 STT 부분
-                          // wordList = helper.getPrefs();
-                          // print("${wordList.toString()}"); // getPrefs() 정상 작동 확인용 코드
-                          // log("${wordList}");
-                          // if (!isListening) {
-                          //   var available = await speechToText.initialize();
-                          //   service.initialize();
-                          //   if (available) {
-                          //     setState(() {
-                          //       isListening = true;
-                          //       speechToText.listen(onResult: (result) {
-                          //         setState(() {
-                          //           text = result.recognizedWords;
-                          //           if (wordList.isNotEmpty) {
-                          //             // prefs 비어있으면 에러가 나므로 조건문 만듦
-                          //             setState(() {
-                          //               log("wordList.isNotEmpty 작동 중");
-                          //               wordList.forEach((element) async {
-                          //                 if (text == element) {
-                          //                   log("지정 단어가 인식되었습니다.");
-                          //                   // 알림 메소드 호출 -> 알림 띄우기 (Observer 패턴 혹은 단순 메소드 호출)
-                          //                   await service.showNotification(
-                          //                       // dart는 비동기 처리를 지원하므로 FCM 등 서버 이용 서비스를 사용하지 않고도 앱 자체에서 이벤트를 기다렸다가 알림을 띄울 수 있다. (다중 스레드로 동작)
-                          //                       id: 0,
-                          //                       title: '사용자 단어 인식',
-                          //                       body:
-                          //                           '지정 단어 " $text "가 인식되었습니다.');
-                          //                   await Vibration.vibrate(
-                          //                       duration: 1000);
-                          //                 }
-                          //               });
-                          //             });
-                          //           }
-                          //         });
-                          //       });
-                          //     });
-                          //   }
-                          // }
-
                         });
                       },
                       backgroundColor: Color(0xff4c88fb),
@@ -305,11 +247,6 @@ class _MainState extends State<Main> {
                       onPressed: () {
                         log('Audio Recognition Stopped');
                         TfliteAudio.stopAudioRecognition();
-                        // setState(() {
-                        //   // 이하: 연우 STT, 음성인식 중지
-                        //   isListening = false;
-                        // });
-                        // speechToText.stop();
                       },
                       backgroundColor: Colors.red,
                       child: const Icon(Icons.adjust),
@@ -319,27 +256,8 @@ class _MainState extends State<Main> {
   }
 }
 
-class BarChart extends StatelessWidget {
-  final double width;
-
-  const BarChart({required this.width});
-
-  @override
-  Widget build(BuildContext context) {
-    double calculatedWidth = width >= 110 ? 230.0 : width * 2.0 + 15;
-
-    return Container(
-      width: calculatedWidth, // 막대 그래프의 너비 (변수로 조절)
-      height: 20.0, // 막대 그래프의 높이
-      decoration: BoxDecoration(
-        color: Color(0xff4c88fb),
-        borderRadius: BorderRadius.circular(30.0), // 가장자리를 둥글게 만듭니다.
-      ),
-    );
-  }
-}
-
 Widget labelListWidget(List<String>? labelList, [String? result]) {
+  String formattedDate = DateFormat('HH:mm:ss').format(DateTime.now());
   return Center(
       child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -347,36 +265,42 @@ Widget labelListWidget(List<String>? labelList, [String? result]) {
           children: labelList!.asMap().entries.map((entry) {
             final index = entry.key;
             final labels = entry.value;
-
+            MyGlobals.mode = 1;
             //결과 출력
             if (labels == result && result != '1 배경 소음') {
-              Vibration.vibrate(pattern: [500, 1000, 500, 2000]);
+              MyGlobals.mode = 2;
+              Vibration.vibrate(pattern: [50]);
               FlutterLocalNotification.showNotification(   // 연우 STT-단어 인식 알림과 동시 동작이 불가능함
                   title: 'NOTICE', body: '$result 소음 발생');
 
               return Padding(
-                padding: const EdgeInsets.all(0),
-                child: Text(
-                  labels.toString() + '이 인식되었습니다.',
-                  textAlign: TextAlign.start, // 왼쪽으로 정렬되도록 TextAlign.start 설정
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+                padding: const EdgeInsets.fromLTRB(20, 33, 0, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      labels.toString() + '가 인식되었습니다.',
+                      textAlign: TextAlign.start,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Text(
+                      '데시벨' + MyGlobals.dd.toStringAsFixed(0)+'  /  시간' +  formattedDate,
+                      textAlign: TextAlign.start,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
                 ),
               );
             } else {
-              return Padding(
-                padding: const EdgeInsets.all(0),
-                child: Text(
-                  ' ',
-                  textAlign: TextAlign.start, // 왼쪽으로 정렬되도록 TextAlign.start 설정
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              );
+              return Container();
             }
           }).toList()));
 }

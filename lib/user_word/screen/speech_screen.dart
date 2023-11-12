@@ -148,7 +148,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
             // 추가함
             Container(
               width: MediaQuery.of(context).size.width,
-              height: 190, // MediaQuery.of(context).size.height, // * 0.7, // 이상: 스크롤view 요소를 추가하면서 함께 추가한 코드
+              height: 150, // MediaQuery.of(context).size.height, // * 0.7, // 이상: 스크롤view 요소를 추가하면서 함께 추가한 코드
               alignment: Alignment.center, // text 등 요소를 가운데 정렬
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               margin: const EdgeInsets.only(bottom: 150),

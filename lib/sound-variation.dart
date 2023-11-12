@@ -30,6 +30,7 @@ class _soundvariationState extends State<soundvariation> {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body:SingleChildScrollView(
       child: Container(
@@ -44,14 +45,18 @@ class _soundvariationState extends State<soundvariation> {
           children: [
             Container(
               // autogroupcukqyS9 (8fcyGJHUgpurejGRpjcUkq)
-              margin: EdgeInsets.fromLTRB(6*fem, 0*fem, 6*fem, 35*fem),
+              margin: EdgeInsets.fromLTRB(0*fem, 15*fem, 6*fem, 20*fem),
               width: double.infinity,
+              //color: Colors.deepOrangeAccent,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     // fibsangleleftt3K (23:315)
-                    margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 70*fem, 0*fem),
+                    width: 30*fem,
+                    height: 25*fem,
+                    margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 50*fem, 0*fem),
+                    //color: Colors.cyan,
                     child: TextButton(
                       onPressed: () {
                         Navigator.pop(
@@ -72,7 +77,12 @@ class _soundvariationState extends State<soundvariation> {
                       ),
                     ),
                   ),
-                  Text(
+                  Container(
+                    width: 160 * fem,
+                    height: 25 * fem,
+                    margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 0*fem, 0*fem),
+                    //color: Colors.red,
+                  child : Text(
                     // MSh (14:51)
                     '소리 종류 설정',
                     textAlign: TextAlign.center,
@@ -83,6 +93,7 @@ class _soundvariationState extends State<soundvariation> {
                       height: 1.3625*ffem/fem,
                       color: Color(0xff000000),
                     ),
+                  ),
                   ),
                 ],
               ),
@@ -104,7 +115,7 @@ class _soundvariationState extends State<soundvariation> {
             Container(
               // autogroupwiqhkDw (8fcyXnqfUBLq1X67XwWiQH)
               margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 0*fem, 19*fem),
-              padding: EdgeInsets.fromLTRB(10.5*fem, 11*fem, 10.5*fem, 15*fem),
+              padding: EdgeInsets.fromLTRB(10.5*fem, 11*fem, 5*fem, 15*fem),
               width: double.infinity,
               decoration: BoxDecoration (
                 color: Color(0xfff5f6f9),
@@ -115,7 +126,7 @@ class _soundvariationState extends State<soundvariation> {
                 children: [
                   Container(
                     // autogroupwa1pDtD (8fcynhaVGKU2DRJ1nLWA1P)
-                    margin: EdgeInsets.fromLTRB(5*fem, 0*fem, 0*fem, 0*fem),
+                    margin: EdgeInsets.fromLTRB(5*fem, 0*fem, 0*fem, 2*fem),
                     width: double.infinity,
                     height: 30*fem,
                     child: Row(
@@ -123,7 +134,7 @@ class _soundvariationState extends State<soundvariation> {
                       children: [
                         Container(
                           // autogroup6n9pNM7 (8fczkFpFYPpLxno8YG6N9P)
-                          padding: EdgeInsets.fromLTRB(0*fem, 8*fem, 100*fem, 0*fem),
+                          padding: EdgeInsets.fromLTRB(0*fem, 2*fem, 90*fem, 0*fem),
                           height: double.infinity,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
@@ -131,7 +142,7 @@ class _soundvariationState extends State<soundvariation> {
                               Container(
                                 // autogroupr377uM3 (8fczdWWVZDz3uMECmBr377)
                                 margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 7*fem, 3*fem),
-                                padding: EdgeInsets.fromLTRB(0*fem, 4*fem, 0*fem, 0*fem),
+                                padding: EdgeInsets.fromLTRB(0*fem, 0*fem, 0*fem, 0*fem),
                                 child: Align(
                                   // qVb (232:63)
                                   alignment: Alignment.bottomCenter,
@@ -200,12 +211,13 @@ class _soundvariationState extends State<soundvariation> {
                     margin: EdgeInsets.fromLTRB(5*fem, 0*fem, 0*fem, 0*fem),
                     width: double.infinity,
                     height: 30*fem,
+                    //color: Colors.cyan,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Container(
                           // autogroup6n9pNM7 (8fczkFpFYPpLxno8YG6N9P)
-                          padding: EdgeInsets.fromLTRB(0*fem, 11*fem, 133*fem, 0*fem),
+                          padding: EdgeInsets.fromLTRB(0*fem, 5*fem, 123*fem, 0*fem),
                           height: double.infinity,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
@@ -213,7 +225,7 @@ class _soundvariationState extends State<soundvariation> {
                               Container(
                                 // autogroupr377uM3 (8fczdWWVZDz3uMECmBr377)
                                 margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 7*fem, 3*fem),
-                                padding: EdgeInsets.fromLTRB(0*fem, 4*fem, 0*fem, 0*fem),
+                                padding: EdgeInsets.fromLTRB(0*fem, 0*fem, 0*fem, 0*fem),
                                 child: Align(
                                   // qVb (232:63)
                                   alignment: Alignment.bottomCenter,
@@ -286,7 +298,7 @@ class _soundvariationState extends State<soundvariation> {
             Container(
               // autogroupz5nzk4q (8fczEMWQfexGxaSW7vZ5nZ)
               margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 0*fem, 19*fem),
-              padding: EdgeInsets.fromLTRB(10.5*fem, 9*fem, 5*fem, 10*fem),
+              padding: EdgeInsets.fromLTRB(10.5*fem, 9*fem, 2*fem, 10*fem),
               width: double.infinity,
               decoration: BoxDecoration (
                 color: Color(0xfff5f6f9),
@@ -297,7 +309,7 @@ class _soundvariationState extends State<soundvariation> {
                 children: [
                   Container(
                     // autogroupuumbeAD (8fczWbYM18vPf5md92Uumb)
-                    margin: EdgeInsets.fromLTRB(3.5*fem, 0*fem, 5.5*fem, 11.5*fem),
+                    margin: EdgeInsets.fromLTRB(3.5*fem, 0*fem, 5*fem, 11.5*fem),
                     width: double.infinity,
                     height: 30*fem,
                     child: Row(
@@ -305,7 +317,7 @@ class _soundvariationState extends State<soundvariation> {
                       children: [
                         Container(
                           // autogroup6n9pNM7 (8fczkFpFYPpLxno8YG6N9P)
-                          padding: EdgeInsets.fromLTRB(0*fem, 8*fem, 120*fem, 0*fem),
+                          padding: EdgeInsets.fromLTRB(0*fem, 8*fem, 110*fem, 0*fem),
                           height: double.infinity,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
@@ -422,8 +434,8 @@ class _soundvariationState extends State<soundvariation> {
 
                         Positioned(
                           // toggleQyw (235:320)
-                          left: 236*fem,
-                          top: -13*fem,
+                          left: 230*fem,
+                          top: -19*fem,
                           child: Container(
                             // toggleUBs (235:318)
                             height: 100, //set desired REAL HEIGHT
@@ -466,7 +478,7 @@ class _soundvariationState extends State<soundvariation> {
                       children: [
                         Container(
                           // autogroupe5t7y9s (8fd1DKsUmXmCny1fa6e5T7)
-                          padding: EdgeInsets.fromLTRB(0*fem, 5*fem, 120*fem, 3*fem),
+                          padding: EdgeInsets.fromLTRB(0*fem, 5*fem, 110*fem, 3*fem),
                           height: double.infinity,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -539,7 +551,7 @@ class _soundvariationState extends State<soundvariation> {
             Container(
               //일상생활 아래 요소 박스
               // autogroup1ytr7Yu (8fd24tHEcZpNpcTHrr1YtR)
-              padding: EdgeInsets.fromLTRB(10.5*fem, 5*fem, 10.5*fem, 11*fem),
+              padding: EdgeInsets.fromLTRB(10.5*fem, 5*fem, 5*fem, 11*fem),
               width: double.infinity,
               decoration: BoxDecoration (
                 color: Color(0xfff5f6f9),
@@ -558,14 +570,14 @@ class _soundvariationState extends State<soundvariation> {
                       children: [
                         Container(
                           // autogroupphdjKus (8fd2WHiaAXTanXmJRoPHDj)
-                          padding: EdgeInsets.fromLTRB(0*fem, 6*fem, 130*fem, 2*fem),
+                          padding: EdgeInsets.fromLTRB(0*fem, 6*fem, 120*fem, 2*fem),
                           height: double.infinity,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
                                 // 4Mf (232:59)
-                                margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 7*fem, 6*fem),
+                                margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 7*fem, 0*fem),
                                 width: 15*fem,
                                 height: 16*fem,
                                 child: Image.asset(
@@ -628,7 +640,7 @@ class _soundvariationState extends State<soundvariation> {
                       children: [
                         Container(
                           // autogroupphdjKus (8fd2WHiaAXTanXmJRoPHDj)
-                          padding: EdgeInsets.fromLTRB(0*fem, 6*fem, 135*fem, 2*fem),
+                          padding: EdgeInsets.fromLTRB(0*fem, 6*fem, 123*fem, 2*fem),
                           height: double.infinity,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -697,7 +709,7 @@ class _soundvariationState extends State<soundvariation> {
                       children: [
                         Container(
                           // autogroupq481bAZ (8fd2sXcBXYLf5oozqYq481)
-                          padding: EdgeInsets.fromLTRB(0*fem, 5.5*fem, 150*fem, 2.5*fem),
+                          padding: EdgeInsets.fromLTRB(0*fem, 5.5*fem, 140*fem, 2.5*fem),
                           height: double.infinity,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -766,7 +778,7 @@ class _soundvariationState extends State<soundvariation> {
                       children: [
                         Container(
                           // autogroupphdjKus (8fd2WHiaAXTanXmJRoPHDj)
-                          padding: EdgeInsets.fromLTRB(0*fem, 6*fem, 115*fem, 2*fem),
+                          padding: EdgeInsets.fromLTRB(0*fem, 6*fem, 103*fem, 2*fem),
                           height: double.infinity,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -835,14 +847,14 @@ class _soundvariationState extends State<soundvariation> {
                       children: [
                         Container(
                           // autogroupphdjKus (8fd2WHiaAXTanXmJRoPHDj)
-                          padding: EdgeInsets.fromLTRB(0*fem, 6*fem, 130*fem, 2*fem),
+                          padding: EdgeInsets.fromLTRB(0*fem, 6*fem, 120*fem, 2*fem),
                           height: double.infinity,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
                                 // 4Mf (232:59)
-                                margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 7*fem, 6*fem),
+                                margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 7*fem, 3*fem),
                                 width: 15*fem,
                                 height: 16*fem,
                                 child: Image.asset(

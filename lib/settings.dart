@@ -35,7 +35,7 @@ class _settingsState extends State<settings> {
 
 
     return MaterialApp(
-
+      debugShowCheckedModeBanner: false,
       //width: double.infinity,
         home: Scaffold(
         body:SingleChildScrollView(
@@ -51,14 +51,14 @@ class _settingsState extends State<settings> {
           children: [
             Container(
               // autogroupqf45fRK (8fdVTgUEbm6oVigEQpQf45)
-              margin: EdgeInsets.fromLTRB(10*fem, 5*fem, 100*fem, 40*fem),
+              margin: EdgeInsets.fromLTRB(13*fem, 10*fem, 100*fem, 40*fem),
               width: double.infinity,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     // fibsangleleftnF3 (235:234)
-                    margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 110*fem, 0*fem),
+                    margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 100*fem, 0*fem),
                     child: TextButton(
 
                       onPressed: () {
@@ -114,7 +114,7 @@ class _settingsState extends State<settings> {
                 children: [
                   Container(
                     // TkV (201:121)
-                    margin: EdgeInsets.fromLTRB(0*fem, 4*fem, 165*fem, 0*fem),
+                    margin: EdgeInsets.fromLTRB(0*fem, 4*fem, 160*fem, 0*fem),
                     child: Text(
                       '녹음 켜짐',
                       style: SafeGoogleFont (
@@ -218,7 +218,7 @@ class _settingsState extends State<settings> {
                 children: [
                   Container(
                     // Agq (201:123)
-                    margin: EdgeInsets.fromLTRB(0*fem, 5*fem, 150*fem, 0*fem),
+                    margin: EdgeInsets.fromLTRB(0*fem, 5*fem, 138*fem, 0*fem),
                     child: Text(
                       '소리 종류 설정',
                       style: SafeGoogleFont (
@@ -269,7 +269,7 @@ class _settingsState extends State<settings> {
             Container(
               // autogroupd8lyHus (8fdVzfacATxkDJKbqED8Ly)
               margin: EdgeInsets.fromLTRB(18*fem, 0*fem, 0*fem, 20*fem),
-              padding: EdgeInsets.fromLTRB(10.5*fem, 10*fem, 10.5*fem, 10*fem),
+              padding: EdgeInsets.fromLTRB(10.5*fem, 10*fem, 8*fem, 10*fem),
               width: double.infinity,
               decoration: BoxDecoration (
                 color: Color(0xfff5f6f9),
@@ -280,15 +280,15 @@ class _settingsState extends State<settings> {
                 children: [
                   Container(
                     // autogroupd1qmyXo (8fdWBuksUR1uK2w9Tgd1Qm)
-                    margin: EdgeInsets.fromLTRB(9.5*fem, 0*fem, 0*fem, 10.5*fem),
+                    margin: EdgeInsets.fromLTRB(9.5*fem, 0*fem, 0*fem, 5*fem),
                     width: double.infinity,
-                    height: 30*fem,
+                    height: 33*fem,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Container(
                           // 6cR (201:133)
-                          margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 135*fem, 1*fem),
+                          margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 122*fem, 5*fem),
                           child: Text(
                             '푸시 알림 켜짐',
                             style: SafeGoogleFont (
@@ -301,6 +301,7 @@ class _settingsState extends State<settings> {
                           ),
                         ),
                         Container(
+                          margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 0*fem, 3*fem),
                           //color: Colors.red,
                           height: 100, //set desired REAL HEIGHT
                           width: 80, //set desired REAL WIDTH
@@ -327,18 +328,19 @@ class _settingsState extends State<settings> {
                   ),
                   Container(
                     // autogrouptkwfeXT (8fdWKVNaJB12JbxLUCTKwF)
-                    margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 0*fem, 9.5*fem),
+                    margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 3*fem, 0*fem),
                     width: double.infinity,
                     height: 50*fem,
+                    //color: Colors.cyan,
                     child: Stack(
                       children: [
                         Positioned(
                           // ZeR (201:134)
                           left: 9.5*fem,
-                          top: 16.5*fem,
+                          top: 11*fem,
                           child: Align(
                             child: SizedBox(
-                              width: 100*fem,
+                              width: 120*fem,
                               height: 22*fem,
                               child: Text(
                                 '진동 알림 켜짐',
@@ -371,8 +373,8 @@ class _settingsState extends State<settings> {
                         ),
                         Positioned(
                           // toggleGx9 (235:277)
-                          left: 238.0*fem,
-                          top: -12*fem,
+                          left: 232*fem,
+                          top:  -18*fem,
                           child: Container(
                             //color: Colors.red,
                             height: 100, //set desired REAL HEIGHT
@@ -401,7 +403,7 @@ class _settingsState extends State<settings> {
                   ),
                   Container(
                     // autogroupkqehxiV (8fdWTjdqPbuc3UY8s4kqeh)
-                    margin: EdgeInsets.fromLTRB(9.5*fem, 0*fem, 0*fem, 0*fem),
+                    margin: EdgeInsets.fromLTRB(9.5*fem, 5*fem, 0*fem, 0*fem),
                     width: double.infinity,
                     height: 30*fem,
                     child: Row(
@@ -409,7 +411,7 @@ class _settingsState extends State<settings> {
                       children: [
                         Container(
                           // DuK (201:135)
-                          margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 100*fem, 1*fem),
+                          margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 86*fem, 1*fem),
                           child: Text(
                             '전체 화면 알림 켜짐',
                             style: SafeGoogleFont (
@@ -422,8 +424,9 @@ class _settingsState extends State<settings> {
                           ),
                         ),
                         Container(
+                          margin: EdgeInsets.fromLTRB(0*fem, 5*fem, 0*fem, 0*fem),
                           //color: Colors.red,
-                          height: 100, //set desired REAL HEIGHT
+                          height: 110, //set desired REAL HEIGHT
                           width: 80, //set desired REAL WIDTH
                           child: Transform.scale(
                             transformHitTests: false,
@@ -477,7 +480,7 @@ class _settingsState extends State<settings> {
                 children: [
                   Container(
                     // Mg5 (201:132)
-                    margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 170*fem, 0*fem),
+                    margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 158*fem, 0*fem),
                     child: Text(
                       '키워드 설정',
                       style: SafeGoogleFont (

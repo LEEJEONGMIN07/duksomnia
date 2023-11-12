@@ -40,11 +40,12 @@ class _SpeechScreenState extends State<SpeechScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat, // floating 액션 버튼 위치 변경: 하단 오른쪽 -> 중앙
-      // floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat, 
-      // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked, 
-      floatingActionButton: AvatarGlow(
-        
+        backgroundColor: Color(0xfff5f6f9),
+       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat, // floating 액션 버튼 위치 변경: 하단 오른쪽 -> 중앙
+      // floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+       //floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
+       floatingActionButton: AvatarGlow(
+
         endRadius: 75.0,
         animate: isListening,
         duration: const Duration(milliseconds: 2000),
@@ -76,7 +77,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
                   isListening = true;
                   speechToText.listen(onResult: (result) {
                     print("speechToText.listen() 정상 실행 중");
-                    
+
                     setState(() {
                       text = result.recognizedWords;
                       log(text);
@@ -116,9 +117,9 @@ class _SpeechScreenState extends State<SpeechScreen> {
           child: CircleAvatar(
             // floating 액션 버튼 생성
             backgroundColor: Color(0xff4c88fb), // bgColor
-            radius: 35,
+            radius: 25,
             child: Icon(isListening ? Icons.mic : Icons.mic_none,
-                color: Colors.white, size: 30,), 
+                color: Colors.white, size: 30,),
           ),
         ),
       ),
@@ -137,7 +138,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
       //   ),
       // ),
 
-      body: 
+      body:
       // SingleChildScrollView(
           // 화면 바디 - 음성 인식된 문장을 스크롤하며 확인할 수 있음
           // reverse: true,
@@ -150,13 +151,13 @@ class _SpeechScreenState extends State<SpeechScreen> {
               width: MediaQuery.of(context).size.width,
               height: 150, // MediaQuery.of(context).size.height, // * 0.7, // 이상: 스크롤view 요소를 추가하면서 함께 추가한 코드
               alignment: Alignment.center, // text 등 요소를 가운데 정렬
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-              margin: const EdgeInsets.only(bottom: 150),
+              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
+              margin: const EdgeInsets.only(bottom: 30),
               child: Text(
                 textAlign: TextAlign.center,
                 text,
                 style: TextStyle(
-                    fontSize: 24,
+                    fontSize:15,
                     color: isListening ? Colors.black87 : Colors.grey,
                     fontWeight: FontWeight.w600),
               ),

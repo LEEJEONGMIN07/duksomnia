@@ -3,6 +3,7 @@
 
 import 'dart:developer';
 
+import 'package:flutter_application_1/utils.dart';
 import 'package:speech_to_text/speech_to_text.dart'; // 음성 인식 결과 반환
 import 'package:avatar_glow/avatar_glow.dart'; // 음성 인식 텍스트를 출력할 때 시각적 효과를 제공
 import 'package:flutter/material.dart';
@@ -10,6 +11,8 @@ import 'package:flutter_application_1/services/local_notification_service.dart';
 import 'package:flutter_application_1/user_word/data/sp_helper.dart';
 import 'package:flutter_application_1/user_word/screen/user-word_screen.dart';
 import 'package:vibration/vibration.dart'; // 알림(진동) 기능, pub.dev
+import 'package:google_fonts/google_fonts.dart';
+
 
 class SpeechScreen extends StatefulWidget {
   const SpeechScreen({super.key});
@@ -29,6 +32,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
 
   late final LocalNotificationService service; // Notification test 위해 추가
 
+
   @override
   void initState() {
     // 알림 기능 연동 위해 추가
@@ -39,6 +43,11 @@ class _SpeechScreenState extends State<SpeechScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // text 변수 글꼴 설정 위해 추가함
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    double ffem = fem * 0.97;
+
     return Scaffold(
         backgroundColor: Color(0xfff5f6f9),
        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat, // floating 액션 버튼 위치 변경: 하단 오른쪽 -> 중앙

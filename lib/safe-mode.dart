@@ -226,10 +226,10 @@ class _safemodeState extends State<safemode> {
           Positioned(
             // Ei5 (241:409)
             left: 120 * fem,
-            top: 98 * fem,
+            top: 95 * fem,
             child: Align(
               child: SizedBox(
-                width: 120 * fem,
+                width: 130 * fem,
                 height: 15 * fem,
                 child: Text(
                   '소리를 분석하고 있습니다.',
@@ -248,7 +248,7 @@ class _safemodeState extends State<safemode> {
           Positioned(
             // settingtwoJxq (241:410)
             left: 317 * fem,
-            top: 30 * fem,
+            top: 50 * fem,
             child: Align(
               child: SizedBox(
                 width: 24 * fem,
@@ -275,7 +275,7 @@ class _safemodeState extends State<safemode> {
           Positioned(
             // PzH (241:413)
             left: 320 * fem,
-            top: 55 * fem,
+            top: 75 * fem,
             child: Align(
               child: SizedBox(
                 width: 20 * fem,
@@ -297,13 +297,13 @@ class _safemodeState extends State<safemode> {
           Positioned(
             // gTb (241:414)
             left: 140 * fem,
-            top: 30 * fem,
+            top: 50 * fem,
             child: Align(
               child: SizedBox(
                 width: 100 * fem,
                 height: 28 * fem,
                 child: Text(
-                  '안전 모드',
+                  '시연 모드',
                   style: SafeGoogleFont(
                     'Nunito',
                     fontSize: 20 * ffem,
@@ -359,59 +359,59 @@ class _safemodeState extends State<safemode> {
               ),
             ),
           ),
-          Positioned(
-            //위험 소리 라벨링 결과 출력 컨테이너
-            // db1928305Bw (224:148)
-            left: 20 * fem,
-            top: 430 * fem,
-            child: Visibility(
-              visible: true,
-              child: Align(
-                child: SizedBox(
-                  width: 320 * fem,
-                  height: 60 * fem,
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(
-                        0 * fem, 12 * fem, 0 * fem, 0 * fem),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20 * fem),
-                      color: Color(0xffff9b9b), //0xffffffff
-                      border: Border.all(color: Color(0xffff5e5e), width: 5),
-                    ),
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        style: SafeGoogleFont(
-                          'Nunito',
-                          fontSize: 14 * ffem,
-                          fontWeight: FontWeight.w700,
-                          height: 1.3625 * ffem / fem,
-                          color: Color(0xff000000),
-                        ),
-                        children: [
-                          TextSpan(
-                            //라벨링결과와 데시벨
-                            text: '이 인식되었습니다.',
-                          ),
-                          TextSpan(
-                            //현재 시간 표시
-                            text: '19시 28분 30초 (--초)\n',
-                            style: SafeGoogleFont(
-                              'Nunito',
-                              fontSize: 11 * ffem,
-                              fontWeight: FontWeight.w700,
-                              height: 1.3625 * ffem / fem,
-                              color: Color(0xff000000),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // Positioned(
+          //   //위험 소리 라벨링 결과 출력 컨테이너
+          //   // db1928305Bw (224:148)
+          //   left: 20 * fem,
+          //   top: 430 * fem,
+          //   child: Visibility(
+          //     visible: true,
+          //     child: Align(
+          //       child: SizedBox(
+          //         width: 320 * fem,
+          //         height: 60 * fem,
+          //         child: Container(
+          //           padding: EdgeInsets.fromLTRB(
+          //               0 * fem, 12 * fem, 0 * fem, 0 * fem),
+          //           decoration: BoxDecoration(
+          //             borderRadius: BorderRadius.circular(20 * fem),
+          //             color: Color(0xffff9b9b), //0xffffffff
+          //             border: Border.all(color: Color(0xffff5e5e), width: 5),
+          //           ),
+          //           child: RichText(
+          //             textAlign: TextAlign.center,
+          //             text: TextSpan(
+          //               style: SafeGoogleFont(
+          //                 'Nunito',
+          //                 fontSize: 14 * ffem,
+          //                 fontWeight: FontWeight.w700,
+          //                 height: 1.3625 * ffem / fem,
+          //                 color: Color(0xff000000),
+          //               ),
+          //               children: [
+          //                 TextSpan(
+          //                   //라벨링결과와 데시벨
+          //                   text: '이 인식되었습니다.',
+          //                 ),
+          //                 TextSpan(
+          //                   //현재 시간 표시
+          //                   text: '19시 28분 30초 (--초)\n',
+          //                   style: SafeGoogleFont(
+          //                     'Nunito',
+          //                     fontSize: 11 * ffem,
+          //                     fontWeight: FontWeight.w700,
+          //                     height: 1.3625 * ffem / fem,
+          //                     color: Color(0xff000000),
+          //                   ),
+          //                 ),
+          //               ],
+          //             ),
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Positioned(
             //실시간 음향 분석 그래프 박스 시작
             // QH7 (241:426)
@@ -421,7 +421,7 @@ class _safemodeState extends State<safemode> {
               padding:
                   EdgeInsets.fromLTRB(20 * fem, 19 * fem, 20 * fem, 20 * fem),
               width: 320 * fem,
-              height: 450 * fem,
+              height: 470 * fem,
               decoration: BoxDecoration(
                 color: Color(0xfff5f6f9),
                 borderRadius: BorderRadius.circular(20 * fem),
@@ -454,7 +454,7 @@ class _safemodeState extends State<safemode> {
                         Container(
                           // fibsanglerightVC5 (241:429)
                           margin: EdgeInsets.fromLTRB(
-                              0 * fem, 0 * fem, 100 * fem, 2 * fem),
+                              0 * fem, 0 * fem, 96 * fem, 2 * fem),
                           width: 7.91 * fem,
                           height: 12 * fem,
                           child: Image.asset(
@@ -825,7 +825,7 @@ class _safemodeState extends State<safemode> {
                           // rectangle12DHj (241:447)
                           margin: EdgeInsets.fromLTRB(
                               0 * fem, 0 * fem, 0 * fem, 1 * fem),
-                          width: 165 * fem,
+                          width: 160 * fem,
                           height: 15 * fem,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30 * fem),
@@ -862,7 +862,7 @@ class _safemodeState extends State<safemode> {
                           // rectangle131jP (241:449)
                           margin: EdgeInsets.fromLTRB(
                               0 * fem, 0 * fem, 0 * fem, 1 * fem),
-                          width: 180 * fem,
+                          width: 175 * fem,
                           height: 15 * fem,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30 * fem),
@@ -876,112 +876,8 @@ class _safemodeState extends State<safemode> {
               ),
             ),
           ),
-          // Positioned(  // STT 화면으로 이동
-          //   // db1928305Bw (224:148)
-          //   left: 20 * fem,
-          //   top: 1000 * fem,
-          //   child: Align(
-          //     child: SizedBox(
-          //       width: 320 * fem,
-          //       height: 150 * fem,
-          //       child: Container(
-          //           padding: EdgeInsets.fromLTRB(
-          //               10 * fem, 12 * fem, 10 * fem, 12 * fem),
-          //           decoration: BoxDecoration(
-          //             borderRadius: BorderRadius.circular(20 * fem),
-          //             color: Color(0xfff5f6f9), //0xffffffff
-          //             //border: Border.all(color: Color(0xffff5e5e),width: 5),
-          //           ),
-          //           child: Column(
-          //             // crossAxisAlignment: CrossAxisAlignment.center,
-          //             mainAxisAlignment: MainAxisAlignment.center,
-          //             children: [
-          //               const Text(
-          //                 '음성 인식 화면으로 넘어갑니다.',
-          //                 style: TextStyle(fontSize: 20),
-          //               ),
-          //               ElevatedButton(
-          //                 // 화면 전환할 버튼 임시로 추가 : 음성 인식 화면으로 전환
-          //                 onPressed: () => Navigator.push(
-          //                   context, MaterialPageRoute(builder: (_) => SpeechScreen())),
-          //                 child: const Text("STT 페이지"),
-          //               ),]
-          //           )
-
-                // )))),
-          // Positioned(
-          //   // db1928305Bw (224:148)
-          //   left: 20 * fem,
-          //   top: 1000 * fem,
-          //   child: Align(
-          //     child: SizedBox(
-          //       width: 320 * fem,
-          //       height: 150 * fem,
-          //       child: Container(
-          //           padding: EdgeInsets.fromLTRB(
-          //               10 * fem, 12 * fem, 10 * fem, 12 * fem),
-          //           decoration: BoxDecoration(
-          //             borderRadius: BorderRadius.circular(20 * fem),
-          //             color: Color(0xfff5f6f9), //0xffffffff
-          //             //border: Border.all(color: Color(0xffff5e5e),width: 5),
-          //           ),
-          //           child: SingleChildScrollView(
-          //               // 화면 바디 - 음성 인식된 문장을 스크롤하며 확인할 수 있음
-          //               reverse: true,
-          //               physics: const BouncingScrollPhysics(),
-          //               child: Column(// 추가함
-          //                   children: <Widget>[
-          //                 Container(
-          //                   width: MediaQuery.of(context).size.width,
-          //                   height: MediaQuery.of(context).size.height *
-          //                       0.7, // 이상: 스크롤view 요소를 추가하면서 함께 추가한 코드
-          //                   // alignment: Alignment.center, // text 등 요소를 행들 기준으로 중앙에 정렬
-          //                   padding: const EdgeInsets.symmetric(
-          //                       horizontal: 24, vertical: 16),
-          //                   margin: const EdgeInsets.only(bottom: 150),
-          //                   child: Text(
-          //                     textAlign: TextAlign.center,
-          //                     text,
-          //                     style: SafeGoogleFont(
-          //                       'Nunito',
-          //                       fontSize: 14 * ffem,
-          //                       fontWeight: FontWeight.w700,
-          //                       height: 1.3625 * ffem / fem,
-          //                       color: Color(0xff000000),
-          //                     ),
-          //                     // style: TextStyle(
-          //                     //     fontSize: 24,
-          //                     //     color: isListening
-          //                     //         ? Colors.black87
-          //                     //         : Colors.grey,
-          //                     //     fontWeight: FontWeight.w600),
-          //                   ),
-          //                 ),
-          //               ]))
-
-                    // RichText(
-                    //   textAlign: TextAlign.center,
-                    //   text: TextSpan(
-                    //     style: SafeGoogleFont (
-                    //       'Nunito',
-                    //       fontSize: 14*ffem,
-                    //       fontWeight: FontWeight.w700,
-                    //       height: 1.3625*ffem/fem,
-                    //       color: Color(0xff000000),
-                    //     ),
-                    //     children: [
-                    //       TextSpan(
-                    //         text: '연우 지금 인식되는 내용 안녕하세요 하나 둘 셋 넷 다섯 여섯 일곱 여덟 아홉 열',
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-
-            //         ),
-            //   ),
-            // ),
-          // ),
           Positioned(
+            // main page 꾸미는 박스
             left: 20 * fem,
             top: 430 * fem,
             child: Align(
@@ -989,17 +885,47 @@ class _safemodeState extends State<safemode> {
                 width: 320 * fem,
                 height: 80 * fem,
                 decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(30.0)),
+                BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.0),
+                    color: Color(0xfff5f6f9),
+                    //Color(0xfff5f6f9), // 외각선 색상을 빨간색으로 설정
+                  ),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 30 * fem,
+            top: 445 * fem,
+            child: Align(
+              child: Container(
+                width: 300 * fem,
+                height: 50 * fem,
                 child: Main(),
               ),
             ),
           ),
-          Positioned( // STT 화면 불러오는 위젯 
+          Positioned( // STT 화면 불러오는 위젯
             left: 20 * fem,
             top: 1000 * fem,
             child: Align(
               child: Container(
                 width: 320 * fem,
+                height: 300 * fem,
+                decoration:
+                BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.0),
+                  color: Color(0xfff5f6f9),
+                  //Color(0xfff5f6f9), // 외각선 색상을 빨간색으로 설정
+                ),
+              ),
+            ),
+          ),
+          Positioned( // STT 화면 불러오는 위젯 
+            left: 40 * fem,
+            top: 1000 * fem,
+            child: Align(
+              child: Container(
+                width: 280 * fem,
                 height: 300 * fem,
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(30.0)),
@@ -1026,7 +952,7 @@ class _BarChartState extends State<BarChart> {
   }
 
   Widget buildBarChart() {
-    double calculatedWidth = MyGlobals.dd >= 110 ? 170.0 : MyGlobals.dd * 2.0;
+    double calculatedWidth = MyGlobals.dd >= 110 ? 170.0 : MyGlobals.dd * 2.0+10;
 
     return Container(
       width: calculatedWidth,

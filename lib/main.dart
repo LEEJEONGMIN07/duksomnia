@@ -72,6 +72,8 @@ class _MainState extends State<Main> {
   final int numThreads = 1;
   final bool isAsset = true;
 
+
+
   //static double dd = 0.0;
 
   final double detectionThreshold = 0.3;
@@ -102,8 +104,8 @@ class _MainState extends State<Main> {
       label: label,
     );
     TfliteAudio.setSpectrogramParameters(nMFCC: 40, hopLength: 16384);
-    // 현진추가부분
-    //  _initializeNoiseMeter(); // STT 확인 위해 임시 주석처리, 이 부분은 조건문 내로 옮겨야 함.
+    //현진추가부분
+     _initializeNoiseMeter(); // STT 확인 위해 임시 주석처리, 이 부분은 조건문 내로 옮겨야 함. 변수 선언에 있을 내용이 아님
     //_initializeLocalNotifications();
     _requestMicrophonePermission();
     FlutterLocalNotification.init();
@@ -180,6 +182,8 @@ class _MainState extends State<Main> {
             // appBar: AppBar(
             //   title: const Text('earZing'),
             // ),
+            backgroundColor: Color(0xfff5f6f9),
+
             body: StreamBuilder<Map<dynamic, dynamic>>(
                 stream: result,
                 builder: (BuildContext context,
@@ -192,6 +196,7 @@ class _MainState extends State<Main> {
                         switch (inferenceSnapshot.connectionState) {
                           case ConnectionState.none:
                             //Loads the asset file.
+                            MyGlobals.mode = 1;
                             if (labelSnapshot.hasData) {
                               log("ConnectionState.none"); // 임시 추가함 연우 혜선
                               return labelListWidget(labelSnapshot.data);
@@ -200,7 +205,6 @@ class _MainState extends State<Main> {
                             }
                             break;
                           case ConnectionState.waiting:
-                            log("ConnectionState.waiting"); // 임시 추가함 연우 혜선
                             return Stack(children: <Widget>[
                               Align(
                                 alignment: Alignment.bottomRight,
@@ -211,7 +215,6 @@ class _MainState extends State<Main> {
 
                           ///Widgets will display the final results.
                           default:
-                            log("ConnectionState.default"); // 임시 추가함 연우 혜선
                             return Stack(children: <Widget>[
                               Align(
                                 alignment: Alignment.bottomRight,
@@ -226,19 +229,19 @@ class _MainState extends State<Main> {
                 }),
 
             //버튼
-            floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+            floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
             floatingActionButton: ValueListenableBuilder(
                 valueListenable: isRecording,
                 builder: (context, value, widget) {
                   if (value == false) {
-                    return FloatingActionButton(
+                    return FloatingActionButton (
                       //누르면 녹음 시작
                       onPressed: () {
                         // 연우 stt 함수 사용 위해 비동기 키워드 추가
                         isRecording.value = true;
+
                         setState(() {
                           getResult();
-                          // _initializeNoiseMeter();
                         });
                       },
                       backgroundColor: Color(0xff4c88fb),
@@ -249,10 +252,17 @@ class _MainState extends State<Main> {
                       ),
                     );
                   } else {
+
                     return FloatingActionButton(
                       onPressed: () {
                         log('Audio Recognition Stopped');
                         TfliteAudio.stopAudioRecognition();
+                        setState(() {
+                          getResult();
+                          MyGlobals.cont=1;
+                          log('cont ${MyGlobals.cont}');
+                          //_initializeNoiseMeter();
+                        });
                       },
                       backgroundColor: Colors.red,
                       child: const Icon(Icons.adjust),
@@ -271,7 +281,7 @@ Widget labelListWidget(List<String>? labelList, [String? result]) {
           children: labelList!.asMap().entries.map((entry) {
             final index = entry.key;
             final labels = entry.value;
-            MyGlobals.mode = 1;
+
             //결과 출력
             if (labels == result && result != '1 배경 소음') {
               Vibration.vibrate(pattern: [50, 100]);
@@ -280,9 +290,12 @@ Widget labelListWidget(List<String>? labelList, [String? result]) {
                   title: 'NOTICE',
                   body: '$result 소음 발생');
               MyGlobals.mode = 2;
+              // Vibration.vibrate(pattern: [50]);
+              // FlutterLocalNotification.showNotification(   // 연우 STT-단어 인식 알림과 동시 동작이 불가능함
+              //     title: 'NOTICE', body: '$result 소음 발생');
 
               return Padding(
-                padding: const EdgeInsets.fromLTRB(20, 33, 0, 0),
+                padding: const EdgeInsets.fromLTRB(20, 12, 0, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -290,7 +303,7 @@ Widget labelListWidget(List<String>? labelList, [String? result]) {
                       labels.toString() + '가 인식되었습니다.',
                       textAlign: TextAlign.start,
                       style: const TextStyle(
-                        fontSize: 13,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
@@ -315,3 +328,6 @@ Widget labelListWidget(List<String>? labelList, [String? result]) {
             }
           }).toList()));
 }
+
+
+

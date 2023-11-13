@@ -82,7 +82,6 @@ class _MainState extends State<Main> {
   late NoiseMeter _noiseMeter;
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
-
   static late double decibel;
 
   // 이하: 연우 STT 기능 연동
@@ -103,8 +102,8 @@ class _MainState extends State<Main> {
       label: label,
     );
     TfliteAudio.setSpectrogramParameters(nMFCC: 40, hopLength: 16384);
-    //현진추가부분
-     _initializeNoiseMeter(); // STT 확인 위해 임시 주석처리, 이 부분은 조건문 내로 옮겨야 함. 변수 선언에 있을 내용이 아님
+    // 현진추가부분
+    //  _initializeNoiseMeter(); // STT 확인 위해 임시 주석처리, 이 부분은 조건문 내로 옮겨야 함.
     //_initializeLocalNotifications();
     _requestMicrophonePermission();
     FlutterLocalNotification.init();
@@ -116,26 +115,26 @@ class _MainState extends State<Main> {
     service.initialize();
   }
 
-//현진추가부분
-  Future<void> _initializeNoiseMeter() async {
-    _noiseMeter = NoiseMeter();
-    try {
-      //_noiseMeter.toString();
+//현진추가부분 // 현진 님 노이즈 받아오는 부분 시작메소드, 끝내는 메소드 추가 부탁드립니다.
+  // Future<void> _initializeNoiseMeter() async {
+  //   _noiseMeter = NoiseMeter();
+  //   try {
+  //     //_noiseMeter.toString();
 
-      _noiseMeter.noise.listen((NoiseReading noiseReading) {
-        //log("decibel : ${noiseReading.meanDecibel}");
-        log("mode : ${MyGlobals.mode}");
-        MyGlobals.dd = noiseReading.meanDecibel;
+  //     _noiseMeter.noise.listen((NoiseReading noiseReading) {
+  //       //log("decibel : ${noiseReading.meanDecibel}");
+  //       log("mode : ${MyGlobals.mode}");
+  //       MyGlobals.dd = noiseReading.meanDecibel;
 
-        if (noiseReading.meanDecibel > 60.0 && labels == result) {
-          FlutterLocalNotification.showNotification(
-              title: '반응', body: '100db 이상 소음 발생'); //60db이 되면 알림이 오도록
-        }
-      });
-    } catch (e) {
-      log('Failed to initialize noise meter: $e');
-    }
-  }
+  //       if (noiseReading.meanDecibel > 60.0 && labels == result) {
+  //         FlutterLocalNotification.showNotification(
+  //             title: '반응', body: '100db 이상 소음 발생'); //60db이 되면 알림이 오도록
+  //       }
+  //     });
+  //   } catch (e) {
+  //     log('Failed to initialize noise meter: $e');
+  //   }
+  // }
 
   Future<void> _requestMicrophonePermission() async {
     final status = await Permission.microphone.request();
@@ -194,11 +193,14 @@ class _MainState extends State<Main> {
                           case ConnectionState.none:
                             //Loads the asset file.
                             if (labelSnapshot.hasData) {
+                              log("ConnectionState.none"); // 임시 추가함 연우 혜선
                               return labelListWidget(labelSnapshot.data);
                             } else {
                               return const CircularProgressIndicator();
-                            } break;
+                            }
+                            break;
                           case ConnectionState.waiting:
+                            log("ConnectionState.waiting"); // 임시 추가함 연우 혜선
                             return Stack(children: <Widget>[
                               Align(
                                 alignment: Alignment.bottomRight,
@@ -206,8 +208,10 @@ class _MainState extends State<Main> {
                               labelListWidget(labelSnapshot.data),
                             ]);
                             break;
+
                           ///Widgets will display the final results.
                           default:
+                            log("ConnectionState.default"); // 임시 추가함 연우 혜선
                             return Stack(children: <Widget>[
                               Align(
                                 alignment: Alignment.bottomRight,
@@ -227,12 +231,14 @@ class _MainState extends State<Main> {
                 valueListenable: isRecording,
                 builder: (context, value, widget) {
                   if (value == false) {
-                    return FloatingActionButton (
+                    return FloatingActionButton(
                       //누르면 녹음 시작
-                      onPressed: () { // 연우 stt 함수 사용 위해 비동기 키워드 추가
+                      onPressed: () {
+                        // 연우 stt 함수 사용 위해 비동기 키워드 추가
                         isRecording.value = true;
                         setState(() {
                           getResult();
+                          // _initializeNoiseMeter();
                         });
                       },
                       backgroundColor: Color(0xff4c88fb),
@@ -268,10 +274,12 @@ Widget labelListWidget(List<String>? labelList, [String? result]) {
             MyGlobals.mode = 1;
             //결과 출력
             if (labels == result && result != '1 배경 소음') {
+              Vibration.vibrate(pattern: [50, 100]);
+              FlutterLocalNotification.showNotification(
+                  // 연우 STT-단어 인식 알림과 동시 동작이 불가능함
+                  title: 'NOTICE',
+                  body: '$result 소음 발생');
               MyGlobals.mode = 2;
-              Vibration.vibrate(pattern: [50]);
-              FlutterLocalNotification.showNotification(   // 연우 STT-단어 인식 알림과 동시 동작이 불가능함
-                  title: 'NOTICE', body: '$result 소음 발생');
 
               return Padding(
                 padding: const EdgeInsets.fromLTRB(20, 33, 0, 0),
@@ -288,7 +296,10 @@ Widget labelListWidget(List<String>? labelList, [String? result]) {
                       ),
                     ),
                     Text(
-                      '데시벨' + MyGlobals.dd.toStringAsFixed(0)+'  /  시간' +  formattedDate,
+                      '데시벨' +
+                          MyGlobals.dd.toStringAsFixed(0) +
+                          '  /  시간' +
+                          formattedDate,
                       textAlign: TextAlign.start,
                       style: const TextStyle(
                         fontSize: 12,

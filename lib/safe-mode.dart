@@ -65,6 +65,7 @@ class _safemodeState extends State<safemode> {
 
     // 1초마다 _updateUI 함수를 호출하여 UI를 업데이트합니다.
     Timer.periodic(Duration(milliseconds: 1), (timer) {
+      print("mode : ${MyGlobals.mode}");
       _updateUI();
     });
   }

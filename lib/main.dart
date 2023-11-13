@@ -105,7 +105,7 @@ class _MainState extends State<Main> {
     );
     TfliteAudio.setSpectrogramParameters(nMFCC: 40, hopLength: 16384);
     //현진추가부분
-     _initializeNoiseMeter(); // STT 확인 위해 임시 주석처리, 이 부분은 조건문 내로 옮겨야 함. 변수 선언에 있을 내용이 아님
+    //  _initializeNoiseMeter(); // STT 확인 위해 임시 주석처리, 이 부분은 조건문 내로 옮겨야 함. 변수 선언에 있을 내용이 아님
     //_initializeLocalNotifications();
     _requestMicrophonePermission();
     FlutterLocalNotification.init();

@@ -72,19 +72,17 @@ class _MainState extends State<Main> {
   final int numThreads = 1;
   final bool isAsset = true;
 
-
-
   //static double dd = 0.0;
 
   final double detectionThreshold = 0.3;
   final int averageWindowDuration = 1000;
   final int minimumTimeBetweenSamples = 30;
   final int suppressionTime = 1500;
-//현진 변경부분
+  //현진 변경부분
   late NoiseMeter _noiseMeter;
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-
   static late double decibel;
+  StreamSubscription<NoiseReading>? _noiseSubscription; // 연우 추가함
 
   // 이하: 연우 STT 기능 연동
   SpeechToText speechToText =
@@ -118,32 +116,44 @@ class _MainState extends State<Main> {
   }
 
 //현진추가부분 // 현진 님 노이즈 받아오는 부분 시작메소드, 끝내는 메소드 추가 부탁드립니다.
-  // Future<void> _initializeNoiseMeter() async {
-  //   _noiseMeter = NoiseMeter();
-  //   try {
-  //     //_noiseMeter.toString();
+  Future<void> _initializeNoiseMeter() async {
+    // int startingNum
+    // 연우: parameter 추가 (int startingNum)
+    _noiseMeter = NoiseMeter();
+    try {
+      // if (startingNum == 2) {
+      // MyGlobals.cont == 2 일 때 실행함
+      _noiseSubscription =
+          _noiseMeter.noise.listen((NoiseReading noiseReading) {
+        //log("mode : ${MyGlobals.mode}");
+        MyGlobals.dd = noiseReading.meanDecibel;
 
-  //     _noiseMeter.noise.listen((NoiseReading noiseReading) {
-  //       //log("decibel : ${noiseReading.meanDecibel}");
-  //       log("mode : ${MyGlobals.mode}");
-  //       MyGlobals.dd = noiseReading.meanDecibel;
+        // if (noiseReading.meanDecibel > 80.0 && labels == result) {
+        if (noiseReading.meanDecibel > 80.0) {
+          FlutterLocalNotification.showNotification(
+              title: '반응', body: '80db 이상 소음 발생'); //80db이 되면 알림이 오도록
+        }
+      });
+      // } else {
+      //   stopNoise();
+      // }
+    } catch (e) {
+      log('Failed to initialize noise meter: $e');
+    }
+  }
 
-  //       if (noiseReading.meanDecibel > 60.0 && labels == result) {
-  //         FlutterLocalNotification.showNotification(
-  //             title: '반응', body: '100db 이상 소음 발생'); //60db이 되면 알림이 오도록
-  //       }
-  //     });
-  //   } catch (e) {
-  //     log('Failed to initialize noise meter: $e');
-  //   }
-  // }
+  // noise를 그만 받아오도록 설정하는 메소드 (연우 추가함)
+  void stopNoise() {
+    _noiseSubscription?.cancel(); // NoiseMeter의 noise 스트림의 구독을 취소함
+    _noiseMeter.dispose(); // NoiseMeter 자원 정리
+  }
 
+  // 현진
   Future<void> _requestMicrophonePermission() async {
     final status = await Permission.microphone.request();
     if (status.isGranted) {
     } else {}
   }
-//여기까지 현진부분
 
   void getResult() {
     result = TfliteAudio.startAudioRecognition(
@@ -183,7 +193,6 @@ class _MainState extends State<Main> {
             //   title: const Text('earZing'),
             // ),
             backgroundColor: Color(0xfff5f6f9),
-
             body: StreamBuilder<Map<dynamic, dynamic>>(
                 stream: result,
                 builder: (BuildContext context,
@@ -194,24 +203,29 @@ class _MainState extends State<Main> {
                       builder: (BuildContext context,
                           AsyncSnapshot<List<String>> labelSnapshot) {
                         switch (inferenceSnapshot.connectionState) {
-                          case ConnectionState.none:
+                          case ConnectionState
+                                .none: // 앱이 초기 상태일 때, 레이블 목록을 불러옴(연우 챗지피티)
                             //Loads the asset file.
                             MyGlobals.mode = 1;
                             if (labelSnapshot.hasData) {
-                              log("ConnectionState.none"); // 임시 추가함 연우 혜선
+                              // 레이블 목록이 이미 가져와진 경우에는 해당 목록을 표시하는 labelListWidget 위젯을 반환(연우,챗지피티)
+
                               return labelListWidget(labelSnapshot.data);
                             } else {
-                              return const CircularProgressIndicator();
+                              return const CircularProgressIndicator(); //로딩 중임을 나타내는 CircularProgressIndicator를 반환함 (연우,챗지피티)
                             }
-                            break;
-                          case ConnectionState.waiting:
+                          // break;
+                          case ConnectionState
+                                .waiting: //  레이블 목록을 가져오는 중일 때, 로딩 중임을 나타내는 Stack 위젯을 반환(챗지피티)
+                            MyGlobals.mode = 1;
                             return Stack(children: <Widget>[
                               Align(
                                 alignment: Alignment.bottomRight,
                               ),
-                              labelListWidget(labelSnapshot.data),
+                              labelListWidget(labelSnapshot
+                                  .data), // labelListWidget 위젯이 하단 오른쪽에 정렬되어 표시됨(챗지피티)
                             ]);
-                            break;
+                          // break;
 
                           ///Widgets will display the final results.
                           default:
@@ -220,6 +234,7 @@ class _MainState extends State<Main> {
                                 alignment: Alignment.bottomRight,
                               ),
                               labelListWidget(
+                                  // labelListWidget 함수는 레이블 목록 및 추론 결과에 따라 화면에 정보를 표시하는 위젯을 생성함(챗지피티)
                                   labelSnapshot.data,
                                   showResult(
                                       inferenceSnapshot, 'recognitionResult'))
@@ -229,19 +244,23 @@ class _MainState extends State<Main> {
                 }),
 
             //버튼
-            floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.miniEndDocked,
             floatingActionButton: ValueListenableBuilder(
                 valueListenable: isRecording,
                 builder: (context, value, widget) {
                   if (value == false) {
-                    return FloatingActionButton (
+                    MyGlobals.mode = 1;
+                    return FloatingActionButton(
                       //누르면 녹음 시작
                       onPressed: () {
-                        // 연우 stt 함수 사용 위해 비동기 키워드 추가
                         isRecording.value = true;
-
                         setState(() {
+                          MyGlobals.cont = 2;
                           getResult();
+
+                          //_initializeNoiseMeter();
+                          log("initiallizeNoiseMeter 정상 실행 확인용");
                         });
                       },
                       backgroundColor: Color(0xff4c88fb),
@@ -252,16 +271,15 @@ class _MainState extends State<Main> {
                       ),
                     );
                   } else {
-
                     return FloatingActionButton(
                       onPressed: () {
                         log('Audio Recognition Stopped');
                         TfliteAudio.stopAudioRecognition();
                         setState(() {
                           getResult();
-                          MyGlobals.cont=1;
-                          log('cont ${MyGlobals.cont}');
-                          //_initializeNoiseMeter();
+
+                          // _initializeNoiseMeter(MyGlobals.cont);
+                          // stopNoise();
                         });
                       },
                       backgroundColor: Colors.red,
@@ -329,5 +347,25 @@ Widget labelListWidget(List<String>? labelList, [String? result]) {
           }).toList()));
 }
 
+// 이하: 데시벨 구독 중지 기능 위한 클래스 정의 (연우 추가)
+class NoiseReading {
+  double meanDecibel;
 
+  NoiseReading(this.meanDecibel);
+}
 
+class NoiseMeter {
+  late StreamController<NoiseReading> _noiseController;
+
+  Stream<NoiseReading> get noise => _noiseController.stream;
+
+  NoiseMeter() {
+    _noiseController = StreamController<NoiseReading>();
+    // NoiseMeter의 초기화 로직을 추가할 수 있습니다.
+  }
+
+  void dispose() {
+    _noiseController.close();
+    // NoiseMeter의 자원을 정리하는 로직을 추가할 수 있습니다.
+  }
+}

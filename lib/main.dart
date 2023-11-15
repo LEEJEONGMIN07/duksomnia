@@ -170,6 +170,10 @@ class _MainState extends State<Main> {
         .onDone(() => isRecording.value = false);
   }
 
+  void stop() {
+    TfliteAudio.stopAudioRecognition();
+  }
+
   Future<List<String>> fetchLabelList() async {
     List<String> _labelList = [];
     await rootBundle.loadString(this.label).then((q) {
@@ -301,7 +305,7 @@ Widget labelListWidget(List<String>? labelList, [String? result]) {
             final labels = entry.value;
 
             //결과 출력
-            if (labels == result && result != '1 배경 소음') {
+            if (labels == result && result != '1 배경 소음' && MyGlobals.dd >= 100) {
               Vibration.vibrate(pattern: [50, 100]);
               FlutterLocalNotification.showNotification(
                   // 연우 STT-단어 인식 알림과 동시 동작이 불가능함

@@ -1,5 +1,5 @@
 // ignore_for_file: library_private_types_in_public_api, prefer_interpolation_to_compose_strings, no_leading_underscores_for_local_identifiers, unnecessary_this, unused_local_variable, prefer_const_constructors, unused_import, sized_box_for_whitespace, unrelated_type_equality_checks, prefer_const_literals_to_create_immutables, unused_field, prefer_final_fields, non_constant_identifier_names, unused_element, unnecessary_import
-
+//혜선
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_application_1/utils.dart';
@@ -209,6 +209,7 @@ class _MainState extends State<Main> {
                               return const CircularProgressIndicator();
                             } break;
                           case ConnectionState.waiting:
+                            //MyGlobals.mode = 1;
                             MyGlobals.mode = 1;
                             return Stack(children: <Widget>[
                               Align(
@@ -244,12 +245,11 @@ class _MainState extends State<Main> {
                       //누르면 녹음 시작
                       onPressed: () { // 연우 stt 함수 사용 위해 비동기 키워드 추가
                         isRecording.value = true;
-
                         setState(() {
                           getResult();
                           MyGlobals.cont=2;
                           log('cont ${MyGlobals.cont}');
-                          //_initializeNoiseMeter();
+                          _initializeNoiseMeter();
                         });
                       },
                       backgroundColor: Color(0xff4c88fb),

@@ -49,11 +49,9 @@ class _SpeechScreenState extends State<SpeechScreen> {
     double ffem = fem * 0.97;
 
     return Scaffold(
-        backgroundColor: Color(0xfff5f6f9),
-       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat, // floating 액션 버튼 위치 변경: 하단 오른쪽 -> 중앙
-      // floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
-       //floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
-       floatingActionButton: AvatarGlow(
+      backgroundColor: Color(0xfff5f6f9),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat, // floating 액션 버튼 위치 변경: 하단 오른쪽 -> 중앙
+      floatingActionButton: AvatarGlow(
 
         endRadius: 75.0,
         animate: isListening,
@@ -101,7 +99,6 @@ class _SpeechScreenState extends State<SpeechScreen> {
                               log("지정 단어가 인식되었습니다.");
                               // 알림 메소드 호출 -> 알림 띄우기 (Observer 패턴 혹은 단순 메소드 호출)
                               await service.showNotification(
-                                  // dart는 비동기 처리를 지원하므로 FCM 등 서버 이용 서비스를 사용하지 않고도 앱 자체에서 이벤트를 기다렸다가 알림을 띄울 수 있다. (다중 스레드로 동작)
                                   id: 0,
                                   title: '사용자 단어 인식',
                                   body: '지정 단어 " $text "가 인식되었습니다.');
@@ -132,20 +129,6 @@ class _SpeechScreenState extends State<SpeechScreen> {
           ),
         ),
       ),
-      // appBar: AppBar(
-      //   // 화면 상단 바
-      //   leading: const Icon(Icons.sort_rounded, color: Colors.white),
-      //   centerTitle: true,
-      //   backgroundColor: Colors.purple, // 'bgColor' or 'const Color.fromARGB()'
-      //   elevation: 0.0,
-      //   title: const Text(
-      //     "Speech to Text 기능 테스트",
-      //     style: TextStyle(
-      //       fontWeight: FontWeight.w600,
-      //       color: Colors.white, // textColor,
-      //     ),
-      //   ),
-      // ),
 
       body:
       // SingleChildScrollView(

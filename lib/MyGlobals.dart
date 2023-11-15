@@ -3,3 +3,4 @@ class MyGlobals {
   static int mode = 1;
   static int cont = 1;
 }
+

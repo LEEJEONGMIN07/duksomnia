@@ -582,7 +582,7 @@ class _safemodeState extends State<safemode> {
                           margin: EdgeInsets.fromLTRB(
                               0 * fem, 0 * fem, 60 * fem, 0 * fem),
                           child: Text(
-                            '노크 소리',
+                            '화재경보 소리',
                             style: SafeGoogleFont(
                               'Nunito',
                               fontSize: 11 * ffem,

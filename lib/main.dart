@@ -326,7 +326,7 @@ Widget labelListWidget(List<String>? labelList, [String? result]) {
 
               Vibration.vibrate(pattern: [50]);
               FlutterLocalNotification.showNotification(   // 연우 STT-단어 인식 알림과 동시 동작이 불가능함
-                  title: 'NOTICE', body: '$result 소음 발생');
+                  title: 'NOTICE', body: '$result 소리 발생');
 
               return Padding(
                 padding: const EdgeInsets.fromLTRB(20, 12, 0, 0),

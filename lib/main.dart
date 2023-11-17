@@ -110,12 +110,7 @@ class _MainState extends State<Main> {
       outputRawScores: false,
     );
     TfliteAudio.setSpectrogramParameters(nMFCC: 40, hopLength: 16384);
-    //현진추가부분
 
-    //_initializeNoiseMeter();
-
-    // STT 확인 위해 임시 주석처리, 이 부분은 조건문 내로 옮겨야 함. 변수 선언에 있을 내용이 아님
-    //_initializeLocalNotifications();
     _requestMicrophonePermission();
     FlutterLocalNotification.init();
     // 3초 후 알림 권한 요청
@@ -124,7 +119,11 @@ class _MainState extends State<Main> {
     // 이하: 연우. 알림 기능 연동 위해 추가
     service = LocalNotificationService();
     service.initialize();
+
+
   }
+
+
 
 //현진 부분
   Future<void> _requestMicrophonePermission() async {
@@ -321,7 +320,7 @@ Widget labelListWidget(List<String>? labelList, [String? result]) {
 
             //결과 출력
 
-            if (labels == result && result != '0 배경 소음'&& MyGlobals.dd >= 60 && MyGlobals.rec == true) {
+            if (labels == result && result != '0 배경 소음'&& MyGlobals.dd >= 50 && MyGlobals.rec == true) {
               MyGlobals.mode = 2;
 
               Vibration.vibrate(pattern: [50]);
@@ -334,7 +333,7 @@ Widget labelListWidget(List<String>? labelList, [String? result]) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      labels.toString() + '가 인식되었습니다.',
+                      labels.toString() + '소리가 인식되었습니다.',
                       textAlign: TextAlign.start,
                       style: const TextStyle(
                         fontSize: 14,

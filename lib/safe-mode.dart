@@ -37,6 +37,10 @@ class _safemodeState extends State<safemode> {
   String icon = 'assets/page-1/images/frame-EHF.png';
   String smile = 'assets/page-1/images/frame-EHF.png';
   String angry = 'assets/page-1/images/frame.png';
+
+  String title = 'assets/page-1/images/-qHj.png';
+  String safe = 'assets/page-1/images/-qHj.png';
+  String emer = 'assets/page-1/images/-evd.png';
   //circle change 캐릭터 들어있는 원
   var character = Color(0xff4c88fb);
   var _blue_c = Color(0xff4c88fb);
@@ -80,12 +84,14 @@ class _safemodeState extends State<safemode> {
       character = _red_c;
       backgrond = _red_b;
       ground = red_g;
+      title = emer;
       // 추가적인 UI 업데이트 코드...
     } else {
       icon = smile;
       character = _blue_c;
       backgrond = _blue_b;
       ground = blue_g;
+      title = safe;
       // 추가적인 UI 업데이트 코드...
     }
 
@@ -199,7 +205,7 @@ class _safemodeState extends State<safemode> {
                 height: 21.84 * fem,
                 child: Image.asset(
                   //안전 텍스트
-                  'assets/page-1/images/-qHj.png',
+                  title,
                   width: 41.04 * fem,
                   height: 21.84 * fem,
                 ),
@@ -492,7 +498,7 @@ class _safemodeState extends State<safemode> {
                         Container(
                           // 3cu (241:431)
                           margin: EdgeInsets.fromLTRB(
-                              0 * fem, 0 * fem, 26 * fem, 0 * fem),
+                              0 * fem, 0 * fem, 23 * fem, 0 * fem),
                           child: Text(
                             '자동차 경적 소리 ',
                             style: SafeGoogleFont(
@@ -580,7 +586,7 @@ class _safemodeState extends State<safemode> {
                         Container(
                           // cxq (241:439)
                           margin: EdgeInsets.fromLTRB(
-                              0 * fem, 0 * fem, 60 * fem, 0 * fem),
+                              0 * fem, 0 * fem, 40 * fem, 0 * fem),
                           child: Text(
                             '화재경보 소리',
                             style: SafeGoogleFont(
@@ -624,9 +630,9 @@ class _safemodeState extends State<safemode> {
                         Container(
                           // PcD (241:437)
                           margin: EdgeInsets.fromLTRB(
-                              0 * fem, 1 * fem, 38 * fem, 0 * fem),
+                              0 * fem, 1 * fem, 46 * fem, 0 * fem),
                           child: Text(
-                            '화재현장 소리 ',
+                            '초인종 소리 ',
                             style: SafeGoogleFont(
                               'Nunito',
                               fontSize: 11 * ffem,
@@ -661,7 +667,7 @@ class _safemodeState extends State<safemode> {
                         Container(
                           // kr5 (241:435)
                           margin: EdgeInsets.fromLTRB(
-                              0 * fem, 1 * fem, 40 * fem, 0 * fem),
+                              0 * fem, 1 * fem, 38 * fem, 0 * fem),
                           child: Text(
                             '응급의료 소리',
                             style: SafeGoogleFont(
@@ -735,9 +741,9 @@ class _safemodeState extends State<safemode> {
                         Container(
                           // WMP (241:434)
                           margin: EdgeInsets.fromLTRB(
-                              0 * fem, 1 * fem, 44 * fem, 0 * fem),
+                              0 * fem, 1 * fem, 34 * fem, 0 * fem),
                           child: Text(
-                            '초인종 소리 ',
+                            '화재현장 소리 ',
                             style: SafeGoogleFont(
                               'Nunito',
                               fontSize: 11 * ffem,

@@ -70,7 +70,7 @@ class _MainState extends State<Main> {
   final int sampleRate = 44100;
   final int bufferSize = 11016;
   //final bool outputRawScores = false;
-  final int numOfInferences = 5;
+  final int numOfInferences = 2;
   final int numThreads = 1;
   final bool isAsset = true;
 

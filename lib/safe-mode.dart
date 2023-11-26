@@ -498,9 +498,9 @@ class _safemodeState extends State<safemode> {
                         Container(
                           // 3cu (241:431)
                           margin: EdgeInsets.fromLTRB(
-                              0 * fem, 0 * fem, 23 * fem, 0 * fem),
+                              0 * fem, 0 * fem, 47 * fem, 0 * fem),
                           child: Text(
-                            '자동차 경적 소리 ',
+                            '데시벨 크기 ',
                             style: SafeGoogleFont(
                               'Nunito',
                               fontSize: 11 * ffem,
@@ -630,7 +630,7 @@ class _safemodeState extends State<safemode> {
                         Container(
                           // PcD (241:437)
                           margin: EdgeInsets.fromLTRB(
-                              0 * fem, 1 * fem, 46 * fem, 0 * fem),
+                              0 * fem, 1 * fem, 48 * fem, 0 * fem),
                           child: Text(
                             '초인종 소리 ',
                             style: SafeGoogleFont(
@@ -643,14 +643,21 @@ class _safemodeState extends State<safemode> {
                           ),
                         ),
                         Container(
-                          // rectangle77HK (241:446)
-                          margin: EdgeInsets.fromLTRB(
-                              0 * fem, 0 * fem, 0 * fem, 1 * fem),
-                          width: 78 * fem,
+                          //slider
+                          padding: EdgeInsets.fromLTRB(
+                              0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                          // width: 50*fem,
                           height: 15 * fem,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30 * fem),
-                            color: Color(0xff4c88fb),
+                          //width: 175 * fem,
+                          //color: Colors.red,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              //Text('가로 막대 그래프'),
+                              SizedBox(height: 0),
+                              BarChart(),
+                              //여기서 width값을 데시벨 값과 연결해야함
+                            ],
                           ),
                         ),
                       ],
@@ -667,9 +674,9 @@ class _safemodeState extends State<safemode> {
                         Container(
                           // kr5 (241:435)
                           margin: EdgeInsets.fromLTRB(
-                              0 * fem, 1 * fem, 38 * fem, 0 * fem),
+                              0 * fem, 1 * fem, 27 * fem, 0 * fem),
                           child: Text(
-                            '응급의료 소리',
+                            '자동차 경적 소리',
                             style: SafeGoogleFont(
                               'Nunito',
                               fontSize: 11 * ffem,
@@ -680,14 +687,21 @@ class _safemodeState extends State<safemode> {
                           ),
                         ),
                         Container(
-                          // rectangle857f (241:448)
-                          margin: EdgeInsets.fromLTRB(
-                              0 * fem, 0 * fem, 0 * fem, 1 * fem),
-                          width: 96 * fem,
+                          //slider
+                          padding: EdgeInsets.fromLTRB(
+                              0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                          // width: 50*fem,
                           height: 15 * fem,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30 * fem),
-                            color: Color(0xff4c88fb),
+                          //width: 175 * fem,
+                          //color: Colors.red,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              //Text('가로 막대 그래프'),
+                              SizedBox(height: 0),
+                              BarChart(),
+                              //여기서 width값을 데시벨 값과 연결해야함
+                            ],
                           ),
                         ),
                       ],
@@ -704,7 +718,7 @@ class _safemodeState extends State<safemode> {
                         Container(
                           // 8rd (241:432)
                           margin: EdgeInsets.fromLTRB(
-                              0 * fem, 1 * fem, 43 * fem, 0 * fem),
+                              0 * fem, 1 * fem, 41 * fem, 0 * fem),
                           child: Text(
                             '개 짖는 소리 ',
                             style: SafeGoogleFont(
@@ -958,7 +972,7 @@ class _BarChartState extends State<BarChart> {
   }
 
   Widget buildBarChart() {
-    double calculatedWidth = MyGlobals.dd >= 110 ? 170.0 : MyGlobals.dd * 2.0+10;
+    double calculatedWidth = MyGlobals.dd >= 110 ? 170.0 : MyGlobals.dd * 1.5+10;
 
     return Container(
       width: calculatedWidth,
